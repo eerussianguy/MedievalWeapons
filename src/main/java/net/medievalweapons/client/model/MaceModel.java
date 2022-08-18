@@ -15,11 +15,11 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
 @Environment(EnvType.CLIENT)
-public class Mace_Entity_Model extends Model
+public class MaceModel extends Model
 {
     private final ModelPart base;
 
-    public Mace_Entity_Model(ModelPart base)
+    public MaceModel(ModelPart base)
     {
         super(RenderType::entitySolid);
         this.base = base.getChild("base");

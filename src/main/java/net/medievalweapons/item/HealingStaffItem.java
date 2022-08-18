@@ -15,8 +15,6 @@ import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 
-import net.medievalweapons.entity.Healing_Ball_Entity;
-import net.medievalweapons.init.ParticleInit;
 import net.medievalweapons.init.SoundInit;
 
 public class HealingStaffItem extends SwordItem
@@ -44,7 +42,7 @@ public class HealingStaffItem extends SwordItem
                     world.playSound(null, playerEntity.blockPosition(), SoundInit.MAGIC_SHOT_EVENT, SoundSource.PLAYERS, 0.9F, 1.0F);
                     if (ConfigInit.CONFIG.old_healing_staff_behavior)
                     {
-                        Healing_Ball_Entity healing_Ball_Entity = new Healing_Ball_Entity(user, world, this.addition);
+                        HealingBallEntity healing_Ball_Entity = new HealingBallEntity(user, world, this.addition);
                         healing_Ball_Entity.shootFromRotation(playerEntity, playerEntity.getXRot(), playerEntity.getYRot(), 0.0F, 0.5F, 1.0F);
                         healing_Ball_Entity.setPosRaw(playerEntity.getX(), playerEntity.getY() + 1.6D, playerEntity.getZ());
                         world.addFreshEntity(healing_Ball_Entity);

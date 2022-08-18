@@ -18,11 +18,11 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.medievalweapons.entity.Francisca_HT_Entity;
+import net.medievalweapons.entity.FranciscaHTEntity;
 import net.medievalweapons.client.model.FranciscaHTModel;
 
 @Environment(EnvType.CLIENT)
-public class FranciscaHTRenderer extends EntityRenderer<Francisca_HT_Entity>
+public class FranciscaHTRenderer extends EntityRenderer<FranciscaHTEntity>
 {
     private static final Map<EntityType<?>, ResourceLocation> TEXTURES = new HashMap<>();
     private final FranciscaHTModel model = new FranciscaHTModel(FranciscaHTModel.getTexturedModelData().bakeRoot());
@@ -33,7 +33,7 @@ public class FranciscaHTRenderer extends EntityRenderer<Francisca_HT_Entity>
     }
 
     @Override
-    public void render(Francisca_HT_Entity francisca_HT_Entity, float f, float g, PoseStack matrixStack, MultiBufferSource vertexConsumerProvider, int i)
+    public void render(FranciscaHTEntity francisca_HT_Entity, float f, float g, PoseStack matrixStack, MultiBufferSource vertexConsumerProvider, int i)
     {
         matrixStack.pushPose();
         matrixStack.mulPose(Vector3f.YP.rotationDegrees(Mth.lerp(g, francisca_HT_Entity.yRotO, francisca_HT_Entity.getYRot()) - 90.0F));
@@ -48,7 +48,7 @@ public class FranciscaHTRenderer extends EntityRenderer<Francisca_HT_Entity>
     }
 
     @Override
-    public ResourceLocation getTexture(Francisca_HT_Entity francisca_HT_Entity)
+    public ResourceLocation getTexture(FranciscaHTEntity francisca_HT_Entity)
     {
         return getTexture(francisca_HT_Entity.getType());
     }

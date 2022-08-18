@@ -15,11 +15,11 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
 @Environment(EnvType.CLIENT)
-public class Lance_Entity_Model extends Model
+public class LanceModel extends Model
 {
     private final ModelPart base;
 
-    public Lance_Entity_Model(ModelPart base)
+    public LanceModel(ModelPart base)
     {
         super(RenderType::entitySolid);
         this.base = base.getChild("base");

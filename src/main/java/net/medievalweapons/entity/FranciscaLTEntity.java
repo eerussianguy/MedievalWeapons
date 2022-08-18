@@ -14,6 +14,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.IndirectEntityDamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -28,34 +29,34 @@ import net.minecraft.world.phys.EntityHitResult;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.medievalweapons.item.FrancisaHTItem;
+import net.medievalweapons.item.FranciscaLTItem;
 import net.medievalweapons.network.EntitySpawnPacket;
 
-public class Francisca_HT_Entity extends AbstractArrow
+public class FranciscaLTEntity extends AbstractArrow
 {
     private static final EntityDataAccessor<Boolean> ENCHANTMENT_GLINT;
-    private ItemStack francisca_HT;
+    private ItemStack francisca_LT;
     private final Set<UUID> piercedEntities = new HashSet<>();
 
-    public Francisca_HT_Entity(EntityType<? extends Francisca_HT_Entity> entityType, Level world, FrancisaHTItem item)
+    public FranciscaLTEntity(EntityType<? extends FranciscaLTEntity> entityType, Level world, FranciscaLTItem item)
     {
         super(entityType, world);
-        this.francisca_HT = new ItemStack(item);
+        this.francisca_LT = new ItemStack(item);
     }
 
-    public Francisca_HT_Entity(Level world, LivingEntity owner, FrancisaHTItem item, ItemStack stack)
+    public FranciscaLTEntity(Level world, LivingEntity owner, FranciscaLTItem item, ItemStack stack)
     {
         super(item.getType(), owner, world);
-        this.francisca_HT = new ItemStack(item);
-        this.francisca_HT = stack.copy();
+        this.francisca_LT = new ItemStack(item);
+        this.francisca_LT = stack.copy();
         this.entityData.set(ENCHANTMENT_GLINT, stack.hasFoil());
     }
 
     @Environment(EnvType.CLIENT)
-    public Francisca_HT_Entity(Level world, double x, double y, double z, FrancisaHTItem item)
+    public FranciscaLTEntity(Level world, double x, double y, double z, FranciscaLTItem item)
     {
         super(item.getType(), x, y, z, world);
-        this.francisca_HT = new ItemStack(item);
+        this.francisca_LT = new ItemStack(item);
     }
 
     @Override
@@ -74,7 +75,7 @@ public class Francisca_HT_Entity extends AbstractArrow
     @Override
     protected ItemStack getPickupItem()
     {
-        return this.francisca_HT.copy();
+        return this.francisca_LT.copy();
     }
 
     @Environment(EnvType.CLIENT)
@@ -86,17 +87,17 @@ public class Francisca_HT_Entity extends AbstractArrow
     @Override
     protected void onHitEntity(EntityHitResult entityHitResult)
     {
-        int level = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PIERCING, this.francisca_HT);
+        int level = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PIERCING, this.francisca_LT);
         Entity hitEntity = entityHitResult.getEntity();
         if (this.piercedEntities.contains(hitEntity.getUUID()) || this.piercedEntities.size() > level)
         {
             return;
         }
         this.piercedEntities.add(hitEntity.getUUID());
-        float damage = ((FrancisaHTItem) this.francisca_HT.getItem()).getDamage() * 2.3F;
+        float damage = ((FranciscaLTItem) this.francisca_LT.getItem()).getDamage() * 2.3F;
         if (hitEntity instanceof Animal)
         {
-            int impalingLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.IMPALING, this.francisca_HT);
+            int impalingLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.IMPALING, this.francisca_LT);
             if (impalingLevel > 0)
             {
                 damage += impalingLevel * 1.5F;
@@ -104,7 +105,7 @@ public class Francisca_HT_Entity extends AbstractArrow
         }
 
         Entity owner = this.getOwner();
-        DamageSource damageSource = Francisca_LT_Entity.createDamageSource(this, owner == null ? this : owner);
+        DamageSource damageSource = createDamageSource(this, owner == null ? this : owner);
         SoundEvent soundEvent = SoundEvents.TRIDENT_HIT;
         if (hitEntity.hurt(damageSource, damage))
         {
@@ -151,14 +152,14 @@ public class Francisca_HT_Entity extends AbstractArrow
     public void readAdditionalSaveData(CompoundTag nbt)
     {
         super.readAdditionalSaveData(nbt);
-        if (nbt.contains("francisca_ht", 10))
+        if (nbt.contains("francisca_lt", 10))
         {
-            this.francisca_HT = ItemStack.of(nbt.getCompound("francisca_lt"));
-            this.entityData.set(ENCHANTMENT_GLINT, this.francisca_HT.hasFoil());
+            this.francisca_LT = ItemStack.of(nbt.getCompound("francisca_lt"));
+            this.entityData.set(ENCHANTMENT_GLINT, this.francisca_LT.hasFoil());
         }
 
         this.piercedEntities.clear();
-        if (nbt.contains("francisca_ht_hit", 9))
+        if (nbt.contains("francisca_lt_hit", 9))
         {
             for (Tag hitEntity : nbt.getList("francisca_lt_hit", 10))
             {
@@ -171,7 +172,7 @@ public class Francisca_HT_Entity extends AbstractArrow
     public void addAdditionalSaveData(CompoundTag nbt)
     {
         super.addAdditionalSaveData(nbt);
-        nbt.put("francisca_ht", this.francisca_HT.save(new CompoundTag()));
+        nbt.put("francisca_lt", this.francisca_LT.save(new CompoundTag()));
 
         ListTag tags = new ListTag();
         for (UUID uuid : this.piercedEntities)
@@ -180,7 +181,7 @@ public class Francisca_HT_Entity extends AbstractArrow
             c.putUUID("UUID", uuid);
             tags.add(c);
         }
-        nbt.put("francisca_ht_hit", tags);
+        nbt.put("francisca_lt_hit", tags);
     }
 
     @Override
@@ -201,7 +202,12 @@ public class Francisca_HT_Entity extends AbstractArrow
 
     static
     {
-        ENCHANTMENT_GLINT = SynchedEntityData.defineId(Francisca_HT_Entity.class, EntityDataSerializers.BOOLEAN);
+        ENCHANTMENT_GLINT = SynchedEntityData.defineId(FranciscaLTEntity.class, EntityDataSerializers.BOOLEAN);
+    }
+
+    public static DamageSource createDamageSource(Entity entity, Entity owner)
+    {
+        return new IndirectEntityDamageSource("francisca", entity, owner).setProjectile();
     }
 
 }

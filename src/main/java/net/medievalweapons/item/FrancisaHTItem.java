@@ -17,21 +17,21 @@ import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 
-import net.medievalweapons.entity.Francisca_HT_Entity;
+import net.medievalweapons.entity.FranciscaHTEntity;
 
 public class FrancisaHTItem extends SwordItem
 {
 
-    private final Supplier<EntityType<Francisca_HT_Entity>> typeSupplier;
-    private EntityType<Francisca_HT_Entity> cachedType = null;
+    private final Supplier<EntityType<FranciscaHTEntity>> typeSupplier;
+    private EntityType<FranciscaHTEntity> cachedType = null;
 
-    public FrancisaHTItem(Tier toolMaterial, float attackDamage, float attackSpeed, Supplier<EntityType<Francisca_HT_Entity>> typeSupplier, Properties settings)
+    public FrancisaHTItem(Tier toolMaterial, float attackDamage, float attackSpeed, Supplier<EntityType<FranciscaHTEntity>> typeSupplier, Properties settings)
     {
         super(toolMaterial, (int) attackDamage, attackSpeed, settings);
         this.typeSupplier = typeSupplier;
     }
 
-    public EntityType<Francisca_HT_Entity> getType()
+    public EntityType<FranciscaHTEntity> getType()
     {
         if (cachedType == null)
         {
@@ -52,7 +52,7 @@ public class FrancisaHTItem extends SwordItem
                 if (!world.isClientSide)
                 {
                     stack.hurtAndBreak(1, playerEntity, entity -> entity.broadcastBreakEvent(user.getUsedItemHand()));
-                    Francisca_HT_Entity francisca_HT_Entity = new Francisca_HT_Entity(world, playerEntity, this, stack);
+                    FranciscaHTEntity francisca_HT_Entity = new FranciscaHTEntity(world, playerEntity, this, stack);
                     francisca_HT_Entity.shootFromRotation(playerEntity, playerEntity.getXRot(), playerEntity.getYRot(), 0.0F, 1.5F, 1.0F);
                     if (playerEntity.isCreative())
                     {
