@@ -28,7 +28,7 @@ import net.minecraft.world.phys.EntityHitResult;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.medievalweapons.item.Francisca_HT_Item;
+import net.medievalweapons.item.FrancisaHTItem;
 import net.medievalweapons.network.EntitySpawnPacket;
 
 public class Francisca_HT_Entity extends AbstractArrow
@@ -37,13 +37,13 @@ public class Francisca_HT_Entity extends AbstractArrow
     private ItemStack francisca_HT;
     private final Set<UUID> piercedEntities = new HashSet<>();
 
-    public Francisca_HT_Entity(EntityType<? extends Francisca_HT_Entity> entityType, Level world, Francisca_HT_Item item)
+    public Francisca_HT_Entity(EntityType<? extends Francisca_HT_Entity> entityType, Level world, FrancisaHTItem item)
     {
         super(entityType, world);
         this.francisca_HT = new ItemStack(item);
     }
 
-    public Francisca_HT_Entity(Level world, LivingEntity owner, Francisca_HT_Item item, ItemStack stack)
+    public Francisca_HT_Entity(Level world, LivingEntity owner, FrancisaHTItem item, ItemStack stack)
     {
         super(item.getType(), owner, world);
         this.francisca_HT = new ItemStack(item);
@@ -52,7 +52,7 @@ public class Francisca_HT_Entity extends AbstractArrow
     }
 
     @Environment(EnvType.CLIENT)
-    public Francisca_HT_Entity(Level world, double x, double y, double z, Francisca_HT_Item item)
+    public Francisca_HT_Entity(Level world, double x, double y, double z, FrancisaHTItem item)
     {
         super(item.getType(), x, y, z, world);
         this.francisca_HT = new ItemStack(item);
@@ -93,7 +93,7 @@ public class Francisca_HT_Entity extends AbstractArrow
             return;
         }
         this.piercedEntities.add(hitEntity.getUUID());
-        float damage = ((Francisca_HT_Item) this.francisca_HT.getItem()).getDamage() * 2.3F;
+        float damage = ((FrancisaHTItem) this.francisca_HT.getItem()).getDamage() * 2.3F;
         if (hitEntity instanceof Animal)
         {
             int impalingLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.IMPALING, this.francisca_HT);

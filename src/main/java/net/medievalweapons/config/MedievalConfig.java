@@ -1,20 +1,23 @@
 package net.medievalweapons.config;
 
-import me.shedaniel.autoconfig.ConfigData;
-import me.shedaniel.autoconfig.annotation.Config;
-import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
+import java.util.function.Function;
 
-@Config(name = "medievalweapons")
-@Config.Gui.Background("minecraft:textures/block/stone.png")
-public class MedievalConfig implements ConfigData
+import org.apache.commons.lang3.tuple.Pair;
+import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.config.ModConfig;
+
+public final class MedievalConfig
 {
+    public static final MedievalServerConfig SERVER = register(ModConfig.Type.SERVER, MedievalServerConfig::new);
 
-    @Comment("20 ticks = 1 second")
-    public int weapon_blocking_cooldown = 60;
-    @Comment("20 ticks = 1 second")
-    public int shield_blocking_cooldown = 40;
-    @Comment("Includes war axe and battle axe")
-    public int extra_weapon_shield_blocking_cooldown = 60;
-    public boolean old_healing_staff_behavior = false;
+    public static void init() {}
+
+    private static <C> C register(ModConfig.Type type, Function<ForgeConfigSpec.Builder, C> factory)
+    {
+        Pair<C, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(factory);
+        ModLoadingContext.get().registerConfig(type, specPair.getRight());
+        return specPair.getLeft();
+    }
 
 }

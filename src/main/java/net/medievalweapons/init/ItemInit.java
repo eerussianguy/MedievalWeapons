@@ -1,137 +1,53 @@
 package net.medievalweapons.init;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.function.Supplier;
 
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Tiers;
 
-import net.medievalweapons.MedievalMain;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
+
+import net.medievalweapons.MedievalWeapons;
 import net.medievalweapons.compat.CompatItems;
 import net.medievalweapons.compat.CompatRecipes;
 import net.medievalweapons.item.*;
 
+import static net.medievalweapons.MedievalWeapons.MOD_ID;
+
 public class ItemInit
 {
-    // Map
-    public static final Map<ResourceLocation, Item> ITEMS = new LinkedHashMap<>();
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MOD_ID);
+
     // Small Axe
-    public static final Small_Axe_Item WOODEN_SMALL_AXE_ITEM = register("wooden_small_axe", new Small_Axe_Item(Tiers.WOOD, 5, -2.9F, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Small_Axe_Item STONE_SMALL_AXE_ITEM = register("stone_small_axe", new Small_Axe_Item(Tiers.STONE, 5, -2.9F, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Small_Axe_Item IRON_SMALL_AXE_ITEM = register("iron_small_axe", new Small_Axe_Item(Tiers.IRON, 5, -2.9F, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Small_Axe_Item GOLDEN_SMALL_AXE_ITEM = register("golden_small_axe", new Small_Axe_Item(Tiers.GOLD, 5, -2.9F, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Small_Axe_Item DIAMOND_SMALL_AXE_ITEM = register("diamond_small_axe", new Small_Axe_Item(Tiers.DIAMOND, 5, -2.9F, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Small_Axe_Item NETHERITE_SMALL_AXE_ITEM = register("netherite_small_axe",
-        new Small_Axe_Item(Tiers.NETHERITE, 5, -2.9F, new Item.Properties().tab(MedievalMain.GROUP).fireResistant()));
+    public static final RegistryObject<SmallAxeItem> WOODEN_SMALL_AXE_ITEM = register("wooden_small_axe", () -> new SmallAxeItem(Tiers.WOOD, 5, -2.9F, new Item.Properties().tab(MedievalWeapons.GROUP)));
     // Long Sword
-    public static final Long_Sword_Item WOOD_LONG_SWORD_ITEM = register("wooden_long_sword", new Long_Sword_Item(Tiers.WOOD, 6, -3.0F, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Long_Sword_Item STONE_LONG_SWORD_ITEM = register("stone_long_sword", new Long_Sword_Item(Tiers.STONE, 6, -3.0F, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Long_Sword_Item IRON_LONG_SWORD_ITEM = register("iron_long_sword", new Long_Sword_Item(Tiers.IRON, 6, -3.0F, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Long_Sword_Item GOLDEN_LONG_SWORD_ITEM = register("golden_long_sword", new Long_Sword_Item(Tiers.GOLD, 6, -3.0F, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Long_Sword_Item DIAMOND_LONG_SWORD_ITEM = register("diamond_long_sword", new Long_Sword_Item(Tiers.DIAMOND, 6, -3.0F, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Long_Sword_Item NETHERITE_LONG_SWORD_ITEM = register("netherite_long_sword",
-        new Long_Sword_Item(Tiers.NETHERITE, 6, -3.0F, new Item.Properties().tab(MedievalMain.GROUP).fireResistant()));
-    // Dagger
-    public static final Dagger_Item WOOD_DAGGER_ITEM = register("wooden_dagger", new Dagger_Item(Tiers.WOOD, 2, -2.0F, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Dagger_Item STONE_DAGGER_ITEM = register("stone_dagger", new Dagger_Item(Tiers.STONE, 2, -2.0F, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Dagger_Item IRON_DAGGER_ITEM = register("iron_dagger", new Dagger_Item(Tiers.IRON, 2, -2.0F, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Dagger_Item GOLDEN_DAGGER_ITEM = register("golden_dagger", new Dagger_Item(Tiers.GOLD, 2, -2.0F, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Dagger_Item DIAMOND_DAGGER_ITEM = register("diamond_dagger", new Dagger_Item(Tiers.DIAMOND, 2, -2.0F, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Dagger_Item NETHERITE_DAGGER_ITEM = register("netherite_dagger",
-        new Dagger_Item(Tiers.NETHERITE, 2, -2.0F, new Item.Properties().tab(MedievalMain.GROUP).fireResistant()));
+    public static final RegistryObject<LongSwordItem> WOOD_LONG_SWORD_ITEM = register("wooden_long_sword", () -> new LongSwordItem(Tiers.WOOD, 6, -3.0F, new Item.Properties().tab(MedievalWeapons.GROUP)));
+    public static final RegistryObject<DaggerItem> WOOD_DAGGER_ITEM = register("wooden_dagger", () -> new DaggerItem(Tiers.WOOD, 2, -2.0F, new Item.Properties().tab(MedievalWeapons.GROUP)));
     // Francisca
-    public static final Francisca_LT_Item WOODEN_FRANCISCA_LT_ITEM = register("wooden_francisca",
-        new Francisca_LT_Item(Tiers.WOOD, 1.0F, -2.6F, () -> EntityInit.WOODEN_FRANCISCA_LT, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Francisca_LT_Item STONE_FRANCISCA_LT_ITEM = register("stone_francisca",
-        new Francisca_LT_Item(Tiers.STONE, 1.0F, -2.6F, () -> EntityInit.STONE_FRANCISCA_LT, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Francisca_HT_Item IRON_FRANCISCA_HT_ITEM = register("iron_francisca",
-        new Francisca_HT_Item(Tiers.IRON, 1.0F, -2.6F, () -> EntityInit.IRON_FRANCISCA_HT, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Francisca_HT_Item GOLDEN_FRANCISCA_HT_ITEM = register("golden_francisca",
-        new Francisca_HT_Item(Tiers.GOLD, 1.0F, -2.6F, () -> EntityInit.GOLDEN_FRANCISCA_HT, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Francisca_HT_Item DIAMOND_FRANCISCA_HT_ITEM = register("diamond_francisca",
-        new Francisca_HT_Item(Tiers.DIAMOND, 1.0F, -2.6F, () -> EntityInit.DIAMOND_FRANCISCA_HT, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Francisca_HT_Item NETHERITE_FRANCISCA_HT_ITEM = register("netherite_francisca",
-        new Francisca_HT_Item(Tiers.NETHERITE, 1.0F, -2.6F, () -> EntityInit.NETHERITE_FRANCISCA_HT, new Item.Properties().tab(MedievalMain.GROUP).fireResistant()));
+    public static final RegistryObject<FranciscaLTItem> WOODEN_FRANCISCA_LT_ITEM = register("wooden_francisca", () -> new FranciscaLTItem(Tiers.WOOD, 1.0F, -2.6F, () -> EntityInit.WOODEN_FRANCISCA_LT, new Item.Properties().tab(MedievalWeapons.GROUP)));
     // Big Axe
-    public static final Big_Axe_Item WOODEN_BIG_AXE_ITEM = register("wooden_big_axe", new Big_Axe_Item(Tiers.WOOD, 6, -3.4F, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Big_Axe_Item STONE_BIG_AXE_ITEM = register("stone_big_axe", new Big_Axe_Item(Tiers.STONE, 6, -3.4F, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Big_Axe_Item IRON_BIG_AXE_ITEM = register("iron_big_axe", new Big_Axe_Item(Tiers.IRON, 6, -3.4F, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Big_Axe_Item GOLDEN_BIG_AXE_ITEM = register("golden_big_axe", new Big_Axe_Item(Tiers.GOLD, 6, -3.4F, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Big_Axe_Item DIAMOND_BIG_AXE_ITEM = register("diamond_big_axe", new Big_Axe_Item(Tiers.DIAMOND, 6, -3.4F, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Big_Axe_Item NETHERITE_BIG_AXE_ITEM = register("netherite_big_axe",
-        new Big_Axe_Item(Tiers.NETHERITE, 6, -3.4F, new Item.Properties().tab(MedievalMain.GROUP).fireResistant()));
-    // Javelin
-    public static final Javelin_Item WOODEN_JAVELIN_ITEM = register("wooden_javelin",
-        new Javelin_Item(Tiers.WOOD, 2.2F, -2.7F, () -> EntityInit.WOODEN_JAVELIN, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Javelin_Item STONE_JAVELIN_ITEM = register("stone_javelin",
-        new Javelin_Item(Tiers.STONE, 2.2F, -2.7F, () -> EntityInit.STONE_JAVELIN, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Javelin_Item IRON_JAVELIN_ITEM = register("iron_javelin",
-        new Javelin_Item(Tiers.IRON, 2.2F, -2.7F, () -> EntityInit.IRON_JAVELIN, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Javelin_Item GOLDEN_JAVELIN_ITEM = register("golden_javelin",
-        new Javelin_Item(Tiers.GOLD, 2.2F, -2.7F, () -> EntityInit.GOLDEN_JAVELIN, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Javelin_Item DIAMOND_JAVELIN_ITEM = register("diamond_javelin",
-        new Javelin_Item(Tiers.DIAMOND, 2.2F, -2.7F, () -> EntityInit.DIAMOND_JAVELIN, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Javelin_Item NETHERITE_JAVELIN_ITEM = register("netherite_javelin",
-        new Javelin_Item(Tiers.NETHERITE, 2.2F, -2.7F, () -> EntityInit.NETHERITE_JAVELIN, new Item.Properties().tab(MedievalMain.GROUP).fireResistant()));
+    public static final RegistryObject<BigAxeItem> WOODEN_BIG_AXE_ITEM = register("wooden_big_axe", () -> new BigAxeItem(Tiers.WOOD, 6, -3.4F, new Item.Properties().tab(MedievalWeapons.GROUP)));
+
     // Lance
-    public static final Lance_Item WOODEN_LANCE_ITEM = register("wooden_lance", new Lance_Item(Tiers.WOOD, 3, -3.2F, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Lance_Item STONE_LANCE_ITEM = register("stone_lance", new Lance_Item(Tiers.STONE, 3, -3.2F, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Lance_Item IRON_LANCE_ITEM = register("iron_lance", new Lance_Item(Tiers.IRON, 3, -3.2F, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Lance_Item GOLDEN_LANCE_ITEM = register("golden_lance", new Lance_Item(Tiers.GOLD, 3, -3.2F, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Lance_Item DIAMOND_LANCE_ITEM = register("diamond_lance", new Lance_Item(Tiers.DIAMOND, 3, -3.2F, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Lance_Item NETHERITE_LANCE_ITEM = register("netherite_lance", new Lance_Item(Tiers.NETHERITE, 3, -3.2F, new Item.Properties().tab(MedievalMain.GROUP).fireResistant()));
+    public static final RegistryObject<LanceItem> WOODEN_LANCE_ITEM = register("wooden_lance", () -> new LanceItem(Tiers.WOOD, 3, -3.2F, new Item.Properties().tab(MedievalWeapons.GROUP)));
     // Healing Staff
-    public static final Healing_Staff_Item WOODEN_HEALING_STAFF_ITEM = register("wooden_healing_staff",
-        new Healing_Staff_Item(Tiers.WOOD, 1, -3.3F, 1, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Healing_Staff_Item STONE_HEALING_STAFF_ITEM = register("stone_healing_staff",
-        new Healing_Staff_Item(Tiers.STONE, 1, -3.3F, 2, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Healing_Staff_Item IRON_HEALING_STAFF_ITEM = register("iron_healing_staff",
-        new Healing_Staff_Item(Tiers.IRON, 1, -3.3F, 3, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Healing_Staff_Item GOLDEN_HEALING_STAFF_ITEM = register("golden_healing_staff",
-        new Healing_Staff_Item(Tiers.GOLD, 1, -3.3F, 3, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Healing_Staff_Item DIAMOND_HEALING_STAFF_ITEM = register("diamond_healing_staff",
-        new Healing_Staff_Item(Tiers.DIAMOND, 1, -3.3F, 4, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Healing_Staff_Item NETHERITE_HEALING_STAFF_ITEM = register("netherite_healing_staff",
-        new Healing_Staff_Item(Tiers.NETHERITE, 1, -3.3F, 5, new Item.Properties().tab(MedievalMain.GROUP).fireResistant()));
-    // Mace
-    public static final Mace_Item WOODEN_MACE_ITEM = register("wooden_mace", new Mace_Item(Tiers.WOOD, 4, -2.8F, 0, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Mace_Item STONE_MACE_ITEM = register("stone_mace", new Mace_Item(Tiers.STONE, 4, -2.8F, 0, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Mace_Item IRON_MACE_ITEM = register("iron_mace", new Mace_Item(Tiers.IRON, 4, -2.8F, 1, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Mace_Item GOLDEN_MACE_ITEM = register("golden_mace", new Mace_Item(Tiers.GOLD, 4, -2.8F, 2, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Mace_Item DIAMOND_MACE_ITEM = register("diamond_mace", new Mace_Item(Tiers.DIAMOND, 3, -2.8F, 2, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Mace_Item NETHERITE_MACE_ITEM = register("netherite_mace", new Mace_Item(Tiers.NETHERITE, 4, -2.8F, 3, new Item.Properties().tab(MedievalMain.GROUP).fireResistant()));
+    public static final RegistryObject<HealingStaffItem> WOODEN_HEALING_STAFF_ITEM = register("wooden_healing_staff", () -> new HealingStaffItem(Tiers.WOOD, 1, -3.3F, 1, new Item.Properties().tab(MedievalWeapons.GROUP)));
     // Ninjato
-    public static final Ninjato_Item WOODEN_NINJATO_ITEM = register("wooden_ninjato", new Ninjato_Item(Tiers.WOOD, 2, -2.1F, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Ninjato_Item STONE_NINJATO_ITEM = register("stone_ninjato", new Ninjato_Item(Tiers.STONE, 2, -2.1F, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Ninjato_Item IRON_NINJATO_ITEM = register("iron_ninjato", new Ninjato_Item(Tiers.IRON, 2, -2.1F, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Ninjato_Item GOLDEN_NINJATO_ITEM = register("golden_ninjato", new Ninjato_Item(Tiers.GOLD, 2, -2.1F, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Ninjato_Item DIAMOND_NINJATO_ITEM = register("diamond_ninjato", new Ninjato_Item(Tiers.DIAMOND, 2, -2.1F, new Item.Properties().tab(MedievalMain.GROUP)));
-    public static final Ninjato_Item NETHERITE_NINJATO_ITEM = register("netherite_ninjato",
-        new Ninjato_Item(Tiers.NETHERITE, 2, -2.1F, new Item.Properties().tab(MedievalMain.GROUP).fireResistant()));
+    public static final RegistryObject<NinjatoItem> WOODEN_NINJATO_ITEM = register("wooden_ninjato", () -> new NinjatoItem(Tiers.WOOD, 2, -2.1F, new Item.Properties().tab(MedievalWeapons.GROUP)));
     // Long Bow
-    public static final Long_Bow_Item LONG_BOW_ITEM = register("long_bow", new Long_Bow_Item(new Item.Properties().durability(443).tab(MedievalMain.GROUP)));
+    public static final RegistryObject<LongBowItem> LONG_BOW_ITEM = register("long_bow", () -> new LongBowItem(new Item.Properties().durability(443).tab(MedievalWeapons.GROUP)));
     // Recurve Bow
-    public static final Recurve_Bow_Item RECURVE_BOW_ITEM = register("recurve_bow", new Recurve_Bow_Item(new Item.Properties().durability(361).tab(MedievalMain.GROUP)));
+    public static final RegistryObject<RecurveBowItem> RECURVE_BOW_ITEM = register("recurve_bow", () -> new RecurveBowItem(new Item.Properties().durability(361).tab(MedievalWeapons.GROUP)));
     // Thalleous Sword
-    public static final Thalleous_Sword_Item THALLEOUS_SWORD = register("thalleous_sword", new Thalleous_Sword_Item(Tiers.DIAMOND, 10, -3.0F, new Item.Properties().tab(MedievalMain.GROUP)));
+    public static final RegistryObject<ThalleousSwordItem> THALLEOUS_SWORD = register("thalleous_sword", () -> new ThalleousSwordItem(Tiers.DIAMOND, 10, -3.0F, new Item.Properties().tab(MedievalWeapons.GROUP)));
 
-    public static <I extends Item> I register(String name, I item)
+    public static <I extends Item> RegistryObject<I> register(String name, Supplier<I> item)
     {
-        ITEMS.put(new ResourceLocation("medievalweapons", name), item);
-        return item;
-    }
-
-    public static void init()
-    {
-        CompatItems.loadItems();
-        CompatRecipes.createRecipes();
-        CompatRecipes.loadRecipes();
-        for (ResourceLocation id : ITEMS.keySet())
-        {
-            Registry.register(Registry.ITEM, id, ITEMS.get(id));
-        }
+        return ITEMS.register(name, item);
     }
 
 }
