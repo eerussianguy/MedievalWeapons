@@ -1,38 +1,38 @@
 package net.medievalweapons.item.renderer;
 
 import net.fabricmc.api.Environment;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.fabricmc.api.EnvType;
 import net.medievalweapons.entity.model.Lance_Entity_Model;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.item.ItemRenderer;
-import net.minecraft.client.render.model.BakedModel;
-import net.minecraft.client.render.model.json.ModelTransformation;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
+import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 
 @Environment(EnvType.CLIENT)
 public enum Lance_Item_Renderer {
     INSTANCE;
 
-    private final Lance_Entity_Model lance_Entity_Model = new Lance_Entity_Model(Lance_Entity_Model.getTexturedModelData().createModel());
+    private final Lance_Entity_Model lance_Entity_Model = new Lance_Entity_Model(Lance_Entity_Model.getTexturedModelData().bakeRoot());
 
-    public boolean render(LivingEntity entity, ItemStack stack, ModelTransformation.Mode renderMode, boolean leftHanded, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light,
+    public boolean render(LivingEntity entity, ItemStack stack, ItemTransforms.TransformType renderMode, boolean leftHanded, PoseStack matrices, MultiBufferSource vertexConsumers, int light,
             int overlay, BakedModel model) {
-        if (renderMode == ModelTransformation.Mode.GUI || renderMode == ModelTransformation.Mode.GROUND || renderMode == ModelTransformation.Mode.FIXED) {
+        if (renderMode == ItemTransforms.TransformType.GUI || renderMode == ItemTransforms.TransformType.GROUND || renderMode == ItemTransforms.TransformType.FIXED) {
             return false;
         }
 
-        matrices.push();
-        model.getTransformation().getTransformation(renderMode).apply(leftHanded, matrices);
+        matrices.pushPose();
+        model.getTransforms().getTransform(renderMode).apply(leftHanded, matrices);
         matrices.translate(-0.7D, 0.27D, 0.0D);
         matrices.scale(1.0F, -1.0F, -1.0F);
-        VertexConsumer vertexConsumer = ItemRenderer.getItemGlintConsumer(vertexConsumers,
-                this.lance_Entity_Model.getLayer(new Identifier("medievalweapons", "textures/entity/" + stack.getItem() + ".png")), false, stack.hasGlint());
-        this.lance_Entity_Model.render(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
-        matrices.pop();
+        VertexConsumer vertexConsumer = ItemRenderer.getFoilBuffer(vertexConsumers,
+                this.lance_Entity_Model.renderType(new ResourceLocation("medievalweapons", "textures/entity/" + stack.getItem() + ".png")), false, stack.hasFoil());
+        this.lance_Entity_Model.renderToBuffer(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
+        matrices.popPose();
         return true;
     }
 }

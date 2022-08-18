@@ -4,9 +4,9 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.medievalweapons.init.*;
 import net.medievalweapons.network.PlayerPacket;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 
 public class MedievalMain implements ModInitializer {
 
@@ -14,10 +14,10 @@ public class MedievalMain implements ModInitializer {
     // Thanks for the awesome series
     // Check it out here: https://youtu.be/yCNUP2NAt-A
 
-    public static final ItemGroup GROUP = FabricItemGroupBuilder.build(new Identifier("medievalweapons", "group"), () -> new ItemStack(ItemInit.DIAMOND_FRANCISCA_HT_ITEM));
+    public static final CreativeModeTab GROUP = FabricItemGroupBuilder.build(new ResourceLocation("medievalweapons", "group"), () -> new ItemStack(ItemInit.DIAMOND_FRANCISCA_HT_ITEM));
 
-    public static final Identifier ID(String path) {
-        return new Identifier("medievalweapons", path);
+    public static final ResourceLocation ID(String path) {
+        return new ResourceLocation("medievalweapons", path);
     }
 
     @Override

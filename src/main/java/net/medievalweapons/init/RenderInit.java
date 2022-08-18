@@ -12,19 +12,19 @@ import net.medievalweapons.entity.renderer.Healing_Ball_Entity_Renderer;
 import net.medievalweapons.entity.renderer.Javelin_Entity_Renderer;
 import net.medievalweapons.init.ParticleInit.HealingAuraParticle;
 import net.medievalweapons.network.EntitySpawnPacket;
-import net.minecraft.client.render.entity.model.EntityModelLayer;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class RenderInit {
 
-    public static final EntityModelLayer BIG_AXE_LAYER = new EntityModelLayer(new Identifier("medievalweapons:big_axe_render_layer"), "big_axe_render_layer");
-    public static final EntityModelLayer FRANCISCA_HT_LAYER = new EntityModelLayer(new Identifier("medievalweapons:francisca_ht_render_layer"), "francisca_ht_render_layer");
-    public static final EntityModelLayer FRANCISCA_LT_LAYER = new EntityModelLayer(new Identifier("medievalweapons:francisca_lt_render_layer"), "francisca_lt_render_layer");
-    public static final EntityModelLayer HEALING_STAFF_LAYER = new EntityModelLayer(new Identifier("medievalweapons:healing_staff_render_layer"), "healing_staff_render_layer");
-    public static final EntityModelLayer JAVELIN_LAYER = new EntityModelLayer(new Identifier("medievalweapons:javelin_render_layer"), "javelin_render_layer");
-    public static final EntityModelLayer LANCE_LAYER = new EntityModelLayer(new Identifier("medievalweapons:lance_render_layer"), "lance_render_layer");
-    public static final EntityModelLayer MACE_LAYER = new EntityModelLayer(new Identifier("medievalweapons:mace_render_layer"), "mace_render_layer");
-    public static final EntityModelLayer THALLEOUS_SWORD_LAYER = new EntityModelLayer(new Identifier("medievalweapons:thalleous_sword_render_layer"), "thalleous_sword_render_layer");
+    public static final ModelLayerLocation BIG_AXE_LAYER = new ModelLayerLocation(new ResourceLocation("medievalweapons:big_axe_render_layer"), "big_axe_render_layer");
+    public static final ModelLayerLocation FRANCISCA_HT_LAYER = new ModelLayerLocation(new ResourceLocation("medievalweapons:francisca_ht_render_layer"), "francisca_ht_render_layer");
+    public static final ModelLayerLocation FRANCISCA_LT_LAYER = new ModelLayerLocation(new ResourceLocation("medievalweapons:francisca_lt_render_layer"), "francisca_lt_render_layer");
+    public static final ModelLayerLocation HEALING_STAFF_LAYER = new ModelLayerLocation(new ResourceLocation("medievalweapons:healing_staff_render_layer"), "healing_staff_render_layer");
+    public static final ModelLayerLocation JAVELIN_LAYER = new ModelLayerLocation(new ResourceLocation("medievalweapons:javelin_render_layer"), "javelin_render_layer");
+    public static final ModelLayerLocation LANCE_LAYER = new ModelLayerLocation(new ResourceLocation("medievalweapons:lance_render_layer"), "lance_render_layer");
+    public static final ModelLayerLocation MACE_LAYER = new ModelLayerLocation(new ResourceLocation("medievalweapons:mace_render_layer"), "mace_render_layer");
+    public static final ModelLayerLocation THALLEOUS_SWORD_LAYER = new ModelLayerLocation(new ResourceLocation("medievalweapons:thalleous_sword_render_layer"), "thalleous_sword_render_layer");
 
     public static void init() {
         // Packet

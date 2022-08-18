@@ -3,7 +3,7 @@ package net.medievalweapons.compat;
 import net.medievalweapons.MedievalMain;
 import net.medievalweapons.entity.*;
 import net.medievalweapons.init.EntityInit;
-import net.minecraft.entity.EntityType;
+import net.minecraft.world.entity.EntityType;
 
 public class CompatEntities {
     // DragonLoot
