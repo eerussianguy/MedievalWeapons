@@ -1,5 +1,8 @@
 package net.medievalweapons.init;
 
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.resources.ResourceLocation;
+
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
@@ -12,10 +15,9 @@ import net.medievalweapons.entity.renderer.Healing_Ball_Entity_Renderer;
 import net.medievalweapons.entity.renderer.Javelin_Entity_Renderer;
 import net.medievalweapons.init.ParticleInit.HealingAuraParticle;
 import net.medievalweapons.network.EntitySpawnPacket;
-import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.resources.ResourceLocation;
 
-public class RenderInit {
+public class RenderInit
+{
 
     public static final ModelLayerLocation BIG_AXE_LAYER = new ModelLayerLocation(new ResourceLocation("medievalweapons:big_axe_render_layer"), "big_axe_render_layer");
     public static final ModelLayerLocation FRANCISCA_HT_LAYER = new ModelLayerLocation(new ResourceLocation("medievalweapons:francisca_ht_render_layer"), "francisca_ht_render_layer");
@@ -26,7 +28,8 @@ public class RenderInit {
     public static final ModelLayerLocation MACE_LAYER = new ModelLayerLocation(new ResourceLocation("medievalweapons:mace_render_layer"), "mace_render_layer");
     public static final ModelLayerLocation THALLEOUS_SWORD_LAYER = new ModelLayerLocation(new ResourceLocation("medievalweapons:thalleous_sword_render_layer"), "thalleous_sword_render_layer");
 
-    public static void init() {
+    public static void init()
+    {
         // Packet
         ClientPlayNetworking.registerGlobalReceiver(EntitySpawnPacket.ID, EntitySpawnPacket::onPacket);
         // Francisca

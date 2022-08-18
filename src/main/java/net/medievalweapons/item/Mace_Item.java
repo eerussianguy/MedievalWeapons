@@ -2,7 +2,6 @@ package net.medievalweapons.item;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -10,14 +9,18 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
 
-public class Mace_Item extends SwordItem {
+import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
+
+public class Mace_Item extends SwordItem
+{
 
     private final Tier material;
     private final float attackDamage;
     public final Multimap<Attribute, AttributeModifier> attributeModifiers;
-    private int addition;
+    private final int addition;
 
-    public Mace_Item(Tier toolMaterial, int attackDamage, float attackSpeed, int addition, Properties settings) {
+    public Mace_Item(Tier toolMaterial, int attackDamage, float attackSpeed, int addition, Properties settings)
+    {
         super(toolMaterial, attackDamage, attackSpeed, settings);
         this.material = toolMaterial;
         this.attackDamage = attackDamage + material.getAttackDamageBonus();
@@ -31,16 +34,19 @@ public class Mace_Item extends SwordItem {
     }
 
     @Override
-    public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlot equipmentSlot) {
+    public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlot equipmentSlot)
+    {
         return equipmentSlot == EquipmentSlot.MAINHAND ? attributeModifiers : super.getDefaultAttributeModifiers(equipmentSlot);
     }
 
     @Override
-    public Tier getTier() {
+    public Tier getTier()
+    {
         return this.material;
     }
 
-    public int getAddition() {
+    public int getAddition()
+    {
         return this.addition;
     }
 

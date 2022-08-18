@@ -2,7 +2,8 @@ package net.medievalweapons.compat;
 
 import net.minecraft.resources.ResourceLocation;
 
-public class SmithingRecipeMaterial {
+public class SmithingRecipeMaterial
+{
 
     public ResourceLocation baseItem;
     public ResourceLocation additionItem;
@@ -10,7 +11,8 @@ public class SmithingRecipeMaterial {
     public String additionType;
     public ResourceLocation output;
 
-    public SmithingRecipeMaterial(ResourceLocation baseItem, ResourceLocation additionItem, String baseType, String additionType, ResourceLocation output) {
+    public SmithingRecipeMaterial(ResourceLocation baseItem, ResourceLocation additionItem, String baseType, String additionType, ResourceLocation output)
+    {
         this.baseItem = baseItem;
         this.additionItem = additionItem;
         this.baseType = baseType;

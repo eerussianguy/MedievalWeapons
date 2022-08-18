@@ -1,13 +1,5 @@
 package net.medievalweapons.entity.renderer;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix3f;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.medievalweapons.entity.Healing_Ball_Entity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -16,22 +8,35 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Matrix3f;
+import com.mojang.math.Matrix4f;
+import com.mojang.math.Vector3f;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.medievalweapons.entity.Healing_Ball_Entity;
+
 @Environment(EnvType.CLIENT)
-public class Healing_Ball_Entity_Renderer extends EntityRenderer<Healing_Ball_Entity> {
+public class Healing_Ball_Entity_Renderer extends EntityRenderer<Healing_Ball_Entity>
+{
     private static final ResourceLocation TEXTURE = new ResourceLocation("medievalweapons:textures/entity/healing_ball.png");
     private static final RenderType LAYER;
 
-    public Healing_Ball_Entity_Renderer(EntityRendererProvider.Context context) {
+    public Healing_Ball_Entity_Renderer(EntityRendererProvider.Context context)
+    {
         super(context);
     }
 
     @Override
-    protected int getBlockLight(Healing_Ball_Entity healing_Ball_Entity, BlockPos blockPos) {
+    protected int getBlockLight(Healing_Ball_Entity healing_Ball_Entity, BlockPos blockPos)
+    {
         return 15;
     }
 
     @Override
-    public void render(Healing_Ball_Entity healing_Ball_Entity, float f, float g, PoseStack matrixStack, MultiBufferSource vertexConsumerProvider, int i) {
+    public void render(Healing_Ball_Entity healing_Ball_Entity, float f, float g, PoseStack matrixStack, MultiBufferSource vertexConsumerProvider, int i)
+    {
         matrixStack.pushPose();
         matrixStack.scale(0.4F, 0.4F, 0.4F);
         matrixStack.mulPose(this.entityRenderDispatcher.cameraOrientation());
@@ -48,17 +53,20 @@ public class Healing_Ball_Entity_Renderer extends EntityRenderer<Healing_Ball_En
         super.render(healing_Ball_Entity, f, g, matrixStack, vertexConsumerProvider, i);
     }
 
-    private static void produceVertex(VertexConsumer vertexConsumer, Matrix4f modelMatrix, Matrix3f normalMatrix, int light, float x, int y, int textureU, int textureV) {
+    private static void produceVertex(VertexConsumer vertexConsumer, Matrix4f modelMatrix, Matrix3f normalMatrix, int light, float x, int y, int textureU, int textureV)
+    {
         vertexConsumer.vertex(modelMatrix, x - 0.5F, (float) y - 0.25F, 0.0F).color(255, 255, 255, 255).uv((float) textureU, (float) textureV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light)
-                .normal(normalMatrix, 0.0F, 1.0F, 0.0F).endVertex();
+            .normal(normalMatrix, 0.0F, 1.0F, 0.0F).endVertex();
     }
 
     @Override
-    public ResourceLocation getTexture(Healing_Ball_Entity healing_Ball_Entity) {
+    public ResourceLocation getTexture(Healing_Ball_Entity healing_Ball_Entity)
+    {
         return TEXTURE;
     }
 
-    static {
+    static
+    {
         LAYER = RenderType.entityCutoutNoCull(TEXTURE);
     }
 }

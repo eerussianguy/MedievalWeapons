@@ -1,9 +1,8 @@
 package net.medievalweapons.entity.renderer;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.medievalweapons.entity.Francisca_LT_Entity;
-import net.medievalweapons.entity.model.Francisca_LT_Entity_Model;
+import java.util.HashMap;
+import java.util.Map;
+
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -13,23 +12,29 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
+
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
-import java.util.HashMap;
-import java.util.Map;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.medievalweapons.entity.Francisca_LT_Entity;
+import net.medievalweapons.entity.model.Francisca_LT_Entity_Model;
 
 @Environment(EnvType.CLIENT)
-public class Francisca_LT_Entity_Renderer extends EntityRenderer<Francisca_LT_Entity> {
+public class Francisca_LT_Entity_Renderer extends EntityRenderer<Francisca_LT_Entity>
+{
     private static final Map<EntityType<?>, ResourceLocation> TEXTURES = new HashMap<>();
     private final Francisca_LT_Entity_Model model = new Francisca_LT_Entity_Model(Francisca_LT_Entity_Model.getTexturedModelData().bakeRoot());
 
-    public Francisca_LT_Entity_Renderer(EntityRendererProvider.Context context) {
+    public Francisca_LT_Entity_Renderer(EntityRendererProvider.Context context)
+    {
         super(context);
     }
 
     @Override
-    public void render(Francisca_LT_Entity francisca_LT_Entity, float f, float g, PoseStack matrixStack, MultiBufferSource vertexConsumerProvider, int i) {
+    public void render(Francisca_LT_Entity francisca_LT_Entity, float f, float g, PoseStack matrixStack, MultiBufferSource vertexConsumerProvider, int i)
+    {
         matrixStack.pushPose();
         VertexConsumer vertexConsumer = ItemRenderer.getFoilBuffer(vertexConsumerProvider, model.renderType(this.getTexture(francisca_LT_Entity)), false, francisca_LT_Entity.enchantingGlint());
 
@@ -44,12 +49,15 @@ public class Francisca_LT_Entity_Renderer extends EntityRenderer<Francisca_LT_En
     }
 
     @Override
-    public ResourceLocation getTexture(Francisca_LT_Entity francisca_LT_Entity) {
+    public ResourceLocation getTexture(Francisca_LT_Entity francisca_LT_Entity)
+    {
         return getTexture(francisca_LT_Entity.getType());
     }
 
-    public static ResourceLocation getTexture(EntityType<?> type) {
-        if (!TEXTURES.containsKey(type)) {
+    public static ResourceLocation getTexture(EntityType<?> type)
+    {
+        if (!TEXTURES.containsKey(type))
+        {
             TEXTURES.put(type, new ResourceLocation("medievalweapons", "textures/entity/" + Registry.ENTITY_TYPE.getKey(type).getPath() + ".png"));
         }
         return TEXTURES.get(type);

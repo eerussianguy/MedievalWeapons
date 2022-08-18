@@ -1,10 +1,7 @@
 package net.medievalweapons.network;
 
-import io.netty.buffer.Unpooled;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.networking.v1.PacketSender;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import java.util.UUID;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.multiplayer.ClientPacketListener;
@@ -16,12 +13,19 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
-import java.util.UUID;
 
-public class EntitySpawnPacket {
+import io.netty.buffer.Unpooled;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.networking.v1.PacketSender;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+
+public class EntitySpawnPacket
+{
     public static final ResourceLocation ID = new ResourceLocation("medievalweapons", "medievalspawn_entity");
 
-    public static Packet<?> createPacket(Entity entity) {
+    public static Packet<?> createPacket(Entity entity)
+    {
         FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
         buf.writeVarInt(Registry.ENTITY_TYPE.getId(entity.getType()));
         buf.writeUUID(entity.getUUID());
@@ -36,7 +40,8 @@ public class EntitySpawnPacket {
     }
 
     @Environment(EnvType.CLIENT)
-    public static void onPacket(Minecraft client, ClientPacketListener networkHandler, FriendlyByteBuf buffer, PacketSender sender) {
+    public static void onPacket(Minecraft client, ClientPacketListener networkHandler, FriendlyByteBuf buffer, PacketSender sender)
+    {
         EntityType<?> type = Registry.ENTITY_TYPE.byId(buffer.readVarInt());
         UUID entityUUID = buffer.readUUID();
         int entityID = buffer.readVarInt();
@@ -48,7 +53,8 @@ public class EntitySpawnPacket {
         client.execute(() -> {
             Level world = client.player.getCommandSenderWorld();
             Entity entity = type.create(world);
-            if (entity != null && world.isClientSide) {
+            if (entity != null && world.isClientSide)
+            {
                 entity.absMoveTo(x, y, z);
                 entity.setPacketCoordinates(x, y, z);
                 entity.setXRot(pitch);

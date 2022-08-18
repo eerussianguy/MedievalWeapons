@@ -1,15 +1,8 @@
 package net.medievalweapons.entity.renderer;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Vector3f;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.medievalweapons.entity.Javelin_Entity;
-import net.medievalweapons.entity.model.Javelin_Entity_Model;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -20,17 +13,28 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Vector3f;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.medievalweapons.entity.Javelin_Entity;
+import net.medievalweapons.entity.model.Javelin_Entity_Model;
+
 @Environment(EnvType.CLIENT)
-public class Javelin_Entity_Renderer extends EntityRenderer<Javelin_Entity> {
+public class Javelin_Entity_Renderer extends EntityRenderer<Javelin_Entity>
+{
     private static final Map<EntityType<?>, ResourceLocation> TEXTURES = new HashMap<>();
     private final Javelin_Entity_Model model = new Javelin_Entity_Model(Javelin_Entity_Model.getTexturedModelData().bakeRoot());
 
-    public Javelin_Entity_Renderer(EntityRendererProvider.Context context) {
+    public Javelin_Entity_Renderer(EntityRendererProvider.Context context)
+    {
         super(context);
     }
 
     @Override
-    public void render(Javelin_Entity javelin_Entity, float f, float g, PoseStack matrixStack, MultiBufferSource vertexConsumerProvider, int i) {
+    public void render(Javelin_Entity javelin_Entity, float f, float g, PoseStack matrixStack, MultiBufferSource vertexConsumerProvider, int i)
+    {
         matrixStack.pushPose();
         VertexConsumer vertexConsumer = ItemRenderer.getFoilBuffer(vertexConsumerProvider, model.renderType(this.getTexture(javelin_Entity)), false, javelin_Entity.enchantingGlint());
 
@@ -45,12 +49,15 @@ public class Javelin_Entity_Renderer extends EntityRenderer<Javelin_Entity> {
     }
 
     @Override
-    public ResourceLocation getTexture(Javelin_Entity javelin_Entity) {
+    public ResourceLocation getTexture(Javelin_Entity javelin_Entity)
+    {
         return getTexture(javelin_Entity.getType());
     }
 
-    public static ResourceLocation getTexture(EntityType<?> type) {
-        if (!TEXTURES.containsKey(type)) {
+    public static ResourceLocation getTexture(EntityType<?> type)
+    {
+        if (!TEXTURES.containsKey(type))
+        {
             TEXTURES.put(type, new ResourceLocation("medievalweapons", "textures/entity/" + Registry.ENTITY_TYPE.getKey(type).getPath() + ".png"));
         }
         return TEXTURES.get(type);

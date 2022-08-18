@@ -1,11 +1,14 @@
 package net.medievalweapons.compat;
 
-import net.medievalweapons.MedievalMain;
-import net.medievalweapons.entity.*;
-import net.medievalweapons.init.EntityInit;
 import net.minecraft.world.entity.EntityType;
 
-public class CompatEntities {
+import net.medievalweapons.MedievalMain;
+import net.medievalweapons.entity.Francisca_HT_Entity;
+import net.medievalweapons.entity.Javelin_Entity;
+import net.medievalweapons.init.EntityInit;
+
+public class CompatEntities
+{
     // DragonLoot
     public static EntityType<Javelin_Entity> DRAGON_JAVELIN;
     public static EntityType<Francisca_HT_Entity> DRAGON_FRANCISCA_HT;
@@ -34,8 +37,10 @@ public class CompatEntities {
     public static EntityType<Javelin_Entity> PENDORITE_JAVELIN;
     public static EntityType<Francisca_HT_Entity> PENDORITE_FRANCISCA_HT;
 
-    public static void loadEntities() {
-        if (CompatItems.isBetterEndLoaded) {
+    public static void loadEntities()
+    {
+        if (CompatItems.isBetterEndLoaded)
+        {
             TERMINITE_FRANCISCA_HT = EntityInit.register("terminite_francisca", EntityInit.create_HT_Francisca(CompatItems.TERMINITE_FRANCISCA_HT_ITEM));
             TERMINITE_JAVELIN = EntityInit.register("terminite_javelin", EntityInit.create_Javelin(CompatItems.TERMINITE_JAVELIN_ITEM));
             AETERNIUM_FRANCISCA_HT = EntityInit.register("aeternium_francisca", EntityInit.create_HT_Francisca(CompatItems.AETERNIUM_FRANCISCA_HT_ITEM));
@@ -50,7 +55,8 @@ public class CompatEntities {
             EntityInit.ENTITY_TYPES.put(MedievalMain.ID("thallasium_francisca"), THALLASIUM_FRANCISCA_HT);
             EntityInit.ENTITY_TYPES.put(MedievalMain.ID("thallasium_javelin"), THALLASIUM_JAVELIN);
         }
-        if (CompatItems.isBetterNetherLoaded) {
+        if (CompatItems.isBetterNetherLoaded)
+        {
             NETHER_RUBY_FRANCISCA_HT = EntityInit.register("nether_ruby_francisca", EntityInit.create_HT_Francisca(CompatItems.NETHER_RUBY_FRANCISCA_HT_ITEM));
             NETHER_RUBY_JAVELIN = EntityInit.register("nether_ruby_javelin", EntityInit.create_Javelin(CompatItems.NETHER_RUBY_JAVELIN_ITEM));
             CINCINNASITE_FRANCISCA_HT = EntityInit.register("cincinnasite_francisca", EntityInit.create_HT_Francisca(CompatItems.CINCINNASITE_FRANCISCA_HT_ITEM));
@@ -65,21 +71,24 @@ public class CompatEntities {
             EntityInit.ENTITY_TYPES.put(MedievalMain.ID("cincinnasite_diamond_javelin"), CINCINNASITE_DIAMOND_JAVELIN);
             EntityInit.ENTITY_TYPES.put(MedievalMain.ID("cincinnasite_diamond_francisca"), CINCINNASITE_DIAMOND_FRANCISCA_HT);
         }
-        if (CompatItems.isDragonLootLoaded) {
+        if (CompatItems.isDragonLootLoaded)
+        {
             DRAGON_JAVELIN = EntityInit.register("dragon_javelin", EntityInit.create_Javelin(CompatItems.DRAGON_JAVELIN_ITEM));
             DRAGON_FRANCISCA_HT = EntityInit.register("dragon_francisca", EntityInit.create_HT_Francisca(CompatItems.DRAGON_FRANCISCA_HT_ITEM));
 
             EntityInit.ENTITY_TYPES.put(MedievalMain.ID("dragon_francisca"), DRAGON_FRANCISCA_HT);
             EntityInit.ENTITY_TYPES.put(MedievalMain.ID("dragon_javelin"), DRAGON_JAVELIN);
         }
-        if (CompatItems.isMythicMetalsLoaded) {
+        if (CompatItems.isMythicMetalsLoaded)
+        {
             // ADAMANTITE_JAVELIN = EntityInit.register("adamantite_javelin", EntityInit.create_Javelin(CompatItems.DRAGON_JAVELIN_ITEM));
             // ADAMANTITE_FRANCISCA_HT = EntityInit.register("adamantite_francisca", EntityInit.create_HT_Francisca(CompatItems.DRAGON_FRANCISCA_HT_ITEM));
 
             // EntityInit.ENTITY_TYPES.put(MedievalMain.ID("adamantite_francisca"), ADAMANTITE_FRANCISCA_HT);
             // EntityInit.ENTITY_TYPES.put(MedievalMain.ID("adamantite_javelin"), ADAMANTITE_JAVELIN);
         }
-        if (CompatItems.isBYGLoaded) {
+        if (CompatItems.isBYGLoaded)
+        {
             PENDORITE_JAVELIN = EntityInit.register("pendorite_javelin", EntityInit.create_Javelin(CompatItems.PENDORITE_JAVELIN_ITEM));
             PENDORITE_FRANCISCA_HT = EntityInit.register("pendorite_francisca", EntityInit.create_HT_Francisca(CompatItems.PENDORITE_FRANCISCA_HT_ITEM));
 

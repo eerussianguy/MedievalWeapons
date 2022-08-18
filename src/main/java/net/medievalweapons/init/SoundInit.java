@@ -4,7 +4,8 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 
-public class SoundInit {
+public class SoundInit
+{
 
     public static final ResourceLocation MAGIC_HEAL_AURA = new ResourceLocation("medievalweapons:magic_heal_aura");
     public static final ResourceLocation MAGIC_SHOT = new ResourceLocation("medievalweapons:magic_shot");
@@ -15,7 +16,8 @@ public class SoundInit {
     public static SoundEvent MAGIC_SHOT_EVENT = new SoundEvent(MAGIC_SHOT);
     public static SoundEvent PARRYING_EVENT = new SoundEvent(PARRYING);
 
-    public static void init() {
+    public static void init()
+    {
         Registry.register(Registry.SOUND_EVENT, SoundInit.MAGIC_HEAL_AURA, MAGIC_HEAL_AURA_EVENT);
         Registry.register(Registry.SOUND_EVENT, SoundInit.MAGIC_SHOT, MAGIC_SHOT_EVENT);
         Registry.register(Registry.SOUND_EVENT, SoundInit.PARRYING, PARRYING_EVENT);

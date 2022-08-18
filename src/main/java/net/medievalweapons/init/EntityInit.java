@@ -3,6 +3,12 @@ package net.medievalweapons.init;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
+
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.medievalweapons.compat.CompatEntities;
 import net.medievalweapons.entity.Francisca_HT_Entity;
@@ -12,13 +18,9 @@ import net.medievalweapons.entity.Javelin_Entity;
 import net.medievalweapons.item.Francisca_HT_Item;
 import net.medievalweapons.item.Francisca_LT_Item;
 import net.medievalweapons.item.Javelin_Item;
-import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EntityDimensions;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobCategory;
 
-public class EntityInit {
+public class EntityInit
+{
     // Map
     public static final Map<ResourceLocation, EntityType<?>> ENTITY_TYPES = new LinkedHashMap<>();
     // Francisca
@@ -37,32 +39,38 @@ public class EntityInit {
     public static final EntityType<Javelin_Entity> NETHERITE_JAVELIN = register("netherite_javelin", create_Javelin(ItemInit.NETHERITE_JAVELIN_ITEM));
     // Healing Ball
     public static final EntityType<Healing_Ball_Entity> HEALING_BALL_ENTITY = register("healing_ball",
-            FabricEntityTypeBuilder.<Healing_Ball_Entity>create(MobCategory.MISC, Healing_Ball_Entity::new).dimensions(EntityDimensions.fixed(0.3F, 0.3F)).build());
+        FabricEntityTypeBuilder.<Healing_Ball_Entity>create(MobCategory.MISC, Healing_Ball_Entity::new).dimensions(EntityDimensions.fixed(0.3F, 0.3F)).build());
 
-    public static void init() {
+    public static void init()
+    {
         CompatEntities.loadEntities();
-        for (ResourceLocation id : ENTITY_TYPES.keySet()) {
+        for (ResourceLocation id : ENTITY_TYPES.keySet())
+        {
             Registry.register(Registry.ENTITY_TYPE, id, ENTITY_TYPES.get(id));
         }
     }
 
-    public static <T extends EntityType<?>> T register(String name, T type) {
+    public static <T extends EntityType<?>> T register(String name, T type)
+    {
         ResourceLocation id = new ResourceLocation("medievalweapons", name);
         ENTITY_TYPES.put(id, type);
         return type;
     }
 
-    private static EntityType<Francisca_LT_Entity> create_LT_Francisca(Francisca_LT_Item item) {
+    private static EntityType<Francisca_LT_Entity> create_LT_Francisca(Francisca_LT_Item item)
+    {
         return FabricEntityTypeBuilder.<Francisca_LT_Entity>create(MobCategory.MISC, (entity, world) -> new Francisca_LT_Entity(entity, world, item)).dimensions(EntityDimensions.fixed(0.5F, 0.5F))
-                .build();
+            .build();
     }
 
-    public static EntityType<Francisca_HT_Entity> create_HT_Francisca(Francisca_HT_Item item) {
+    public static EntityType<Francisca_HT_Entity> create_HT_Francisca(Francisca_HT_Item item)
+    {
         return FabricEntityTypeBuilder.<Francisca_HT_Entity>create(MobCategory.MISC, (entity, world) -> new Francisca_HT_Entity(entity, world, item)).dimensions(EntityDimensions.fixed(0.5F, 0.5F))
-                .build();
+            .build();
     }
 
-    public static EntityType<Javelin_Entity> create_Javelin(Javelin_Item item) {
+    public static EntityType<Javelin_Entity> create_Javelin(Javelin_Item item)
+    {
         return FabricEntityTypeBuilder.<Javelin_Entity>create(MobCategory.MISC, (entity, world) -> new Javelin_Entity(entity, world, item)).dimensions(EntityDimensions.fixed(0.5F, 0.5F)).build();
     }
 

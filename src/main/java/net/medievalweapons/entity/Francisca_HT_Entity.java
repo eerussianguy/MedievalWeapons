@@ -1,9 +1,9 @@
 package net.medievalweapons.entity;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.medievalweapons.item.Francisca_HT_Item;
-import net.medievalweapons.network.EntitySpawnPacket;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
+
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -25,21 +25,26 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
 
-public class Francisca_HT_Entity extends AbstractArrow {
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.medievalweapons.item.Francisca_HT_Item;
+import net.medievalweapons.network.EntitySpawnPacket;
+
+public class Francisca_HT_Entity extends AbstractArrow
+{
     private static final EntityDataAccessor<Boolean> ENCHANTMENT_GLINT;
     private ItemStack francisca_HT;
     private final Set<UUID> piercedEntities = new HashSet<>();
 
-    public Francisca_HT_Entity(EntityType<? extends Francisca_HT_Entity> entityType, Level world, Francisca_HT_Item item) {
+    public Francisca_HT_Entity(EntityType<? extends Francisca_HT_Entity> entityType, Level world, Francisca_HT_Item item)
+    {
         super(entityType, world);
         this.francisca_HT = new ItemStack(item);
     }
 
-    public Francisca_HT_Entity(Level world, LivingEntity owner, Francisca_HT_Item item, ItemStack stack) {
+    public Francisca_HT_Entity(Level world, LivingEntity owner, Francisca_HT_Item item, ItemStack stack)
+    {
         super(item.getType(), owner, world);
         this.francisca_HT = new ItemStack(item);
         this.francisca_HT = stack.copy();
@@ -47,44 +52,53 @@ public class Francisca_HT_Entity extends AbstractArrow {
     }
 
     @Environment(EnvType.CLIENT)
-    public Francisca_HT_Entity(Level world, double x, double y, double z, Francisca_HT_Item item) {
+    public Francisca_HT_Entity(Level world, double x, double y, double z, Francisca_HT_Item item)
+    {
         super(item.getType(), x, y, z, world);
         this.francisca_HT = new ItemStack(item);
     }
 
     @Override
-    protected void defineSynchedData() {
+    protected void defineSynchedData()
+    {
         super.defineSynchedData();
         this.entityData.define(ENCHANTMENT_GLINT, false);
     }
 
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<?> getAddEntityPacket()
+    {
         return EntitySpawnPacket.createPacket(this);
     }
 
     @Override
-    protected ItemStack getPickupItem() {
+    protected ItemStack getPickupItem()
+    {
         return this.francisca_HT.copy();
     }
 
     @Environment(EnvType.CLIENT)
-    public boolean enchantingGlint() {
+    public boolean enchantingGlint()
+    {
         return this.entityData.get(ENCHANTMENT_GLINT);
     }
 
     @Override
-    protected void onHitEntity(EntityHitResult entityHitResult) {
+    protected void onHitEntity(EntityHitResult entityHitResult)
+    {
         int level = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PIERCING, this.francisca_HT);
         Entity hitEntity = entityHitResult.getEntity();
-        if (this.piercedEntities.contains(hitEntity.getUUID()) || this.piercedEntities.size() > level) {
+        if (this.piercedEntities.contains(hitEntity.getUUID()) || this.piercedEntities.size() > level)
+        {
             return;
         }
         this.piercedEntities.add(hitEntity.getUUID());
         float damage = ((Francisca_HT_Item) this.francisca_HT.getItem()).getDamage() * 2.3F;
-        if (hitEntity instanceof Animal) {
+        if (hitEntity instanceof Animal)
+        {
             int impalingLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.IMPALING, this.francisca_HT);
-            if (impalingLevel > 0) {
+            if (impalingLevel > 0)
+            {
                 damage += impalingLevel * 1.5F;
             }
         }
@@ -92,14 +106,18 @@ public class Francisca_HT_Entity extends AbstractArrow {
         Entity owner = this.getOwner();
         DamageSource damageSource = Francisca_LT_Entity.createDamageSource(this, owner == null ? this : owner);
         SoundEvent soundEvent = SoundEvents.TRIDENT_HIT;
-        if (hitEntity.hurt(damageSource, damage)) {
-            if (hitEntity.getType() == EntityType.ENDERMAN) {
+        if (hitEntity.hurt(damageSource, damage))
+        {
+            if (hitEntity.getType() == EntityType.ENDERMAN)
+            {
                 return;
             }
 
-            if (hitEntity instanceof LivingEntity) {
+            if (hitEntity instanceof LivingEntity)
+            {
                 LivingEntity hitLivingEntity = (LivingEntity) hitEntity;
-                if (owner instanceof LivingEntity) {
+                if (owner instanceof LivingEntity)
+                {
                     EnchantmentHelper.doPostHurtEffects(hitLivingEntity, owner);
                     EnchantmentHelper.doPostDamageEffects((LivingEntity) owner, hitLivingEntity);
                 }
@@ -108,45 +126,56 @@ public class Francisca_HT_Entity extends AbstractArrow {
             }
         }
 
-        if (this.piercedEntities.size() > level) {
+        if (this.piercedEntities.size() > level)
+        {
             this.setDeltaMovement(this.getDeltaMovement().multiply(-0.01D, -0.1D, -0.01D));
-        } else {
+        }
+        else
+        {
             this.setDeltaMovement(this.getDeltaMovement().scale(0.75));
         }
 
     }
 
     @Override
-    public void playerTouch(Player player) {
+    public void playerTouch(Player player)
+    {
         Entity entity = this.getOwner();
-        if (entity == null || entity.getUUID() == player.getUUID()) {
+        if (entity == null || entity.getUUID() == player.getUUID())
+        {
             super.playerTouch(player);
         }
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag nbt) {
+    public void readAdditionalSaveData(CompoundTag nbt)
+    {
         super.readAdditionalSaveData(nbt);
-        if (nbt.contains("francisca_ht", 10)) {
+        if (nbt.contains("francisca_ht", 10))
+        {
             this.francisca_HT = ItemStack.of(nbt.getCompound("francisca_lt"));
             this.entityData.set(ENCHANTMENT_GLINT, this.francisca_HT.hasFoil());
         }
 
         this.piercedEntities.clear();
-        if (nbt.contains("francisca_ht_hit", 9)) {
-            for (Tag hitEntity : nbt.getList("francisca_lt_hit", 10)) {
+        if (nbt.contains("francisca_ht_hit", 9))
+        {
+            for (Tag hitEntity : nbt.getList("francisca_lt_hit", 10))
+            {
                 this.piercedEntities.add(((CompoundTag) hitEntity).getUUID("UUID"));
             }
         }
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag nbt) {
+    public void addAdditionalSaveData(CompoundTag nbt)
+    {
         super.addAdditionalSaveData(nbt);
         nbt.put("francisca_ht", this.francisca_HT.save(new CompoundTag()));
 
         ListTag tags = new ListTag();
-        for (UUID uuid : this.piercedEntities) {
+        for (UUID uuid : this.piercedEntities)
+        {
             CompoundTag c = new CompoundTag();
             c.putUUID("UUID", uuid);
             tags.add(c);
@@ -155,19 +184,23 @@ public class Francisca_HT_Entity extends AbstractArrow {
     }
 
     @Override
-    public void tickDespawn() {
-        if (this.pickup != AbstractArrow.Pickup.ALLOWED) {
+    public void tickDespawn()
+    {
+        if (this.pickup != AbstractArrow.Pickup.ALLOWED)
+        {
             super.tickDespawn();
         }
     }
 
     @Override
     @Environment(EnvType.CLIENT)
-    public boolean shouldRender(double cameraX, double cameraY, double cameraZ) {
+    public boolean shouldRender(double cameraX, double cameraY, double cameraZ)
+    {
         return true;
     }
 
-    static {
+    static
+    {
         ENCHANTMENT_GLINT = SynchedEntityData.defineId(Francisca_HT_Entity.class, EntityDataSerializers.BOOLEAN);
     }
 

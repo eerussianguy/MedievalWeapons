@@ -2,12 +2,7 @@ package net.medievalweapons.entity;
 
 import java.util.Iterator;
 import java.util.List;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.medievalweapons.init.EntityInit;
-import net.medievalweapons.init.ParticleInit;
-import net.medievalweapons.init.SoundInit;
-import net.medievalweapons.network.EntitySpawnPacket;
+
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.sounds.SoundSource;
@@ -24,41 +19,58 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
-public class Healing_Ball_Entity extends ThrowableProjectile {
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.medievalweapons.init.EntityInit;
+import net.medievalweapons.init.ParticleInit;
+import net.medievalweapons.init.SoundInit;
+import net.medievalweapons.network.EntitySpawnPacket;
+
+public class Healing_Ball_Entity extends ThrowableProjectile
+{
     private int addition = 0;
 
-    public Healing_Ball_Entity(EntityType<? extends Healing_Ball_Entity> entityType, Level world) {
+    public Healing_Ball_Entity(EntityType<? extends Healing_Ball_Entity> entityType, Level world)
+    {
         super(entityType, world);
     }
 
-    public Healing_Ball_Entity(EntityType<? extends Healing_Ball_Entity> entityType, double d, double e, double f, Level world) {
+    public Healing_Ball_Entity(EntityType<? extends Healing_Ball_Entity> entityType, double d, double e, double f, Level world)
+    {
         super(entityType, d, e, f, world);
     }
 
-    public Healing_Ball_Entity(LivingEntity livingEntity, Level world, int addition) {
+    public Healing_Ball_Entity(LivingEntity livingEntity, Level world, int addition)
+    {
         super(EntityInit.HEALING_BALL_ENTITY, livingEntity, world);
         this.addition = addition;
     }
 
     @Environment(EnvType.CLIENT)
-    public Healing_Ball_Entity(Level world, double x, double y, double z, double directionX, double directionY, double directionZ) {
+    public Healing_Ball_Entity(Level world, double x, double y, double z, double directionX, double directionY, double directionZ)
+    {
         super(EntityInit.HEALING_BALL_ENTITY, x, y, z, world);
     }
 
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<?> getAddEntityPacket()
+    {
         return EntitySpawnPacket.createPacket(this);
     }
 
     @Override
-    public void onHit(HitResult hitResult) {
+    public void onHit(HitResult hitResult)
+    {
         super.onHit(hitResult);
         Entity entity = this.getOwner();
-        if (hitResult.getType() != HitResult.Type.ENTITY || !((EntityHitResult) hitResult).getEntity().is(entity)) {
-            if (!this.level.isClientSide) {
+        if (hitResult.getType() != HitResult.Type.ENTITY || !((EntityHitResult) hitResult).getEntity().is(entity))
+        {
+            if (!this.level.isClientSide)
+            {
                 List<LivingEntity> list = this.level.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(4.0D, 2.0D, 4.0D));
                 AreaEffectCloud areaEffectCloudEntity = new AreaEffectCloud(this.level, this.getX(), this.getY(), this.getZ());
-                if (entity instanceof LivingEntity) {
+                if (entity instanceof LivingEntity)
+                {
                     areaEffectCloudEntity.setOwner((LivingEntity) entity);
                 }
                 areaEffectCloudEntity.setParticle(ParticleInit.HEALING_AURA_PARTICLE);
@@ -66,12 +78,15 @@ public class Healing_Ball_Entity extends ThrowableProjectile {
                 areaEffectCloudEntity.setDuration(this.addition * 100);
                 areaEffectCloudEntity.setRadiusPerTick(-(12.0F - areaEffectCloudEntity.getRadius()) / 500.0F);
                 areaEffectCloudEntity.addEffect(new MobEffectInstance(MobEffects.HEAL, 1, 0));
-                if (!list.isEmpty()) {
+                if (!list.isEmpty())
+                {
                     Iterator<LivingEntity> var5 = list.iterator();
-                    while (var5.hasNext()) {
-                        LivingEntity livingEntity = (LivingEntity) var5.next();
+                    while (var5.hasNext())
+                    {
+                        LivingEntity livingEntity = var5.next();
                         double d = this.distanceToSqr(livingEntity);
-                        if (d < 16.0D) {
+                        if (d < 16.0D)
+                        {
                             areaEffectCloudEntity.absMoveTo(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ());
                             break;
                         }
@@ -86,7 +101,8 @@ public class Healing_Ball_Entity extends ThrowableProjectile {
     }
 
     @Override
-    public void tick() {
+    public void tick()
+    {
         super.tick();
         this.checkInsideBlocks();
         Vec3 vec3d = this.getDeltaMovement();
@@ -95,18 +111,23 @@ public class Healing_Ball_Entity extends ThrowableProjectile {
         double f = this.getZ() + vec3d.z;
         this.updateRotation();
         float j;
-        if (this.isInWater()) {
-            for (int i = 0; i < 4; ++i) {
+        if (this.isInWater())
+        {
+            for (int i = 0; i < 4; ++i)
+            {
                 this.level.addParticle(ParticleTypes.BUBBLE, d - vec3d.x * 0.25D, e - vec3d.y * 0.25D, f - vec3d.z * 0.25D, vec3d.x, vec3d.y, vec3d.z);
             }
 
             j = 0.8F;
-        } else {
+        }
+        else
+        {
             j = 0.99F;
         }
 
-        this.setDeltaMovement(vec3d.scale((double) j));
-        if (!this.isNoGravity()) {
+        this.setDeltaMovement(vec3d.scale(j));
+        if (!this.isNoGravity())
+        {
             Vec3 vec3d2 = this.getDeltaMovement();
             // Drag
             this.setDeltaMovement(vec3d2.x, vec3d2.y - (0.002D - ((double) this.addition / 3000D)), vec3d2.z);
@@ -116,16 +137,19 @@ public class Healing_Ball_Entity extends ThrowableProjectile {
     }
 
     @Override
-    public boolean isPickable() {
+    public boolean isPickable()
+    {
         return false;
     }
 
     @Override
-    public boolean hurt(DamageSource source, float amount) {
+    public boolean hurt(DamageSource source, float amount)
+    {
         return false;
     }
 
     @Override
-    protected void defineSynchedData() {
+    protected void defineSynchedData()
+    {
     }
 }
