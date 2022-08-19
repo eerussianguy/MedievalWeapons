@@ -1,8 +1,6 @@
 package net.medievalweapons.item;
 
-import java.util.function.Consumer;
 
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -17,11 +15,6 @@ import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 
-import net.minecraftforge.client.IItemRenderProperties;
-import net.minecraftforge.common.util.NonNullLazy;
-
-import net.dries007.tfc.client.render.blockentity.JavelinItemRenderer;
-import net.medievalweapons.client.renderer.FranciscaHTRenderer;
 import net.medievalweapons.entity.FranciscaHTEntity;
 
 public class FrancisaHTItem extends SwordItem

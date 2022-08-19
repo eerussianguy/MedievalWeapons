@@ -1,14 +1,12 @@
 package net.medievalweapons;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 
 import net.medievalweapons.init.TagInit;
-import net.medievalweapons.item.BigAxeItem;
-import net.medievalweapons.item.LanceItem;
-import net.medievalweapons.item.LongSwordItem;
-import net.medievalweapons.item.SmallAxeItem;
+import net.medievalweapons.item.*;
 
 public final class MUtil
 {
@@ -40,6 +38,24 @@ public final class MUtil
     public static boolean reducesSwingTime(ItemStack stack)
     {
         return hasSpecialBlockBehavior(stack) || stack.getItem() instanceof LanceItem;
+    }
+
+    public static float getExtraReach(ItemStack stack)
+    {
+        final Item item = stack.getItem();
+        if (item instanceof ThalleousSwordItem)
+        {
+            return 1f;
+        }
+        else if (item instanceof LongSwordItem)
+        {
+            return 0.8f;
+        }
+        else if (item instanceof LanceItem)
+        {
+            return 1.5f;
+        }
+        return 0;
     }
 
     public static ResourceLocation identifier(String path)

@@ -6,6 +6,7 @@ import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.BowItem;
@@ -13,7 +14,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.PlaySoundAtEntityEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -37,6 +40,7 @@ public class ForgeEvents
         bus.addListener(ForgeEvents::onPlaySoundAt);
         bus.addListener(ForgeEvents::onEntityJoin);
         bus.addListener(ForgeEvents::onShieldHit);
+        bus.addListener(ForgeEvents::onAttributes);
     }
 
     public static void onShieldHit(ShieldBlockEvent event)
@@ -148,6 +152,15 @@ public class ForgeEvents
                     event.getEntityLiving().addEffect(new MobEffectInstance(EffectInit.STUN_EFFECT.get(), ((int) sword.getDamage()) * 2 + 60));
                 }
             }
+        }
+    }
+
+    public static void onAttributes(ItemAttributeModifierEvent event)
+    {
+        final float reach = MUtil.getExtraReach(event.getItemStack());
+        if (reach > 0)
+        {
+            event.addModifier(ForgeMod.ATTACK_RANGE.get(), new AttributeModifier("Attack range", reach, AttributeModifier.Operation.ADDITION));
         }
     }
 }
