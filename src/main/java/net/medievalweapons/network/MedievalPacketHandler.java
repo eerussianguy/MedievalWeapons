@@ -11,12 +11,12 @@ import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 
-import net.medievalweapons.MedievalWeapons;
+import net.medievalweapons.MUtil;
 
 public class MedievalPacketHandler
 {
     private static final String VERSION = Integer.toString(1);
-    private static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(MedievalWeapons.identifier("network"), () -> VERSION, VERSION::equals, VERSION::equals);
+    private static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(MUtil.identifier("network"), () -> VERSION, VERSION::equals, VERSION::equals);
     private static final MutableInt ID = new MutableInt(0);
 
     public static void send(PacketDistributor.PacketTarget target, Object message)

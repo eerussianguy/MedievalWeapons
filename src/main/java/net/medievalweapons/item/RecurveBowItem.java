@@ -4,7 +4,6 @@ import net.minecraft.world.item.BowItem;
 
 public class RecurveBowItem extends BowItem
 {
-
     public RecurveBowItem(Properties settings)
     {
         super(settings);
@@ -15,5 +14,4 @@ public class RecurveBowItem extends BowItem
     {
         return 12;
     }
-
 }

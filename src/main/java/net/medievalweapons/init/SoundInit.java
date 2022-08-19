@@ -5,6 +5,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import net.medievalweapons.MUtil;
 import net.medievalweapons.MedievalWeapons;
 
 public class SoundInit
@@ -16,7 +17,7 @@ public class SoundInit
 
     public static RegistryObject<SoundEvent> register(String name)
     {
-        return SOUNDS.register(name, () -> new SoundEvent(MedievalWeapons.identifier(name)));
+        return SOUNDS.register(name, () -> new SoundEvent(MUtil.identifier(name)));
     }
 
 }

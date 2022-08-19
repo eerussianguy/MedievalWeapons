@@ -9,7 +9,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-import net.medievalweapons.MedievalWeapons;
+import net.medievalweapons.MUtil;
 import net.medievalweapons.client.model.*;
 import net.medievalweapons.client.renderer.FranciscaHTRenderer;
 import net.medievalweapons.client.renderer.FranciscaLTRenderer;
@@ -81,7 +81,7 @@ public final class ClientEvents
 
     public static ModelLayerLocation modelIdentifier(String name, String part)
     {
-        return new ModelLayerLocation(MedievalWeapons.identifier(name), part);
+        return new ModelLayerLocation(MUtil.identifier(name), part);
     }
 
     public static ModelLayerLocation modelIdentifier(String name)
@@ -91,6 +91,6 @@ public final class ClientEvents
 
     public static ResourceLocation texture(ItemStack stack)
     {
-        return MedievalWeapons.identifier("textures/entity/" + stack.getItem() + ".png");
+        return MUtil.identifier("textures/entity/" + stack.getItem() + ".png");
     }
 }

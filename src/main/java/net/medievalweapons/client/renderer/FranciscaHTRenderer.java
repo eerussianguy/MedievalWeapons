@@ -17,7 +17,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
-import net.medievalweapons.MedievalWeapons;
+import net.medievalweapons.MUtil;
 import net.medievalweapons.client.ClientEvents;
 import net.medievalweapons.entity.FranciscaHTEntity;
 import net.medievalweapons.client.model.FranciscaHTModel;
@@ -58,7 +58,7 @@ public class FranciscaHTRenderer extends EntityRenderer<FranciscaHTEntity>
     {
         if (!TEXTURES.containsKey(type))
         {
-            TEXTURES.put(type, MedievalWeapons.identifier("textures/entity/" + ForgeRegistries.ENTITIES.getKey(type).getPath() + ".png"));
+            TEXTURES.put(type, MUtil.identifier("textures/entity/" + ForgeRegistries.ENTITIES.getKey(type).getPath() + ".png"));
         }
         return TEXTURES.get(type);
     }

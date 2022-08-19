@@ -2,7 +2,6 @@ package net.medievalweapons;
 
 import java.util.function.Supplier;
 
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 
@@ -28,11 +27,6 @@ public final class MedievalWeapons
     public static final String MOD_ID = "medievalweapons";
 
     public static final CreativeModeTab GROUP = MedievalItemGroup.WEAPONS;
-
-    public static ResourceLocation identifier(String path)
-    {
-        return new ResourceLocation(MOD_ID, path);
-    }
 
     public MedievalWeapons()
     {

@@ -8,11 +8,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
+import net.medievalweapons.MUtil;
 import net.medievalweapons.config.MedievalConfig;
-import net.medievalweapons.init.TagInit;
-import net.medievalweapons.item.BigAxeItem;
-import net.medievalweapons.item.LanceItem;
-import net.medievalweapons.item.LongSwordItem;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.At.Shift;
@@ -31,8 +28,8 @@ public abstract class LivingEntityMixin extends Entity
     private void getHandSwingDuration(CallbackInfoReturnable<Integer> info)
     {
         LivingEntity livingEntity = (LivingEntity) (Object) this;
-        ItemStack itemStack = livingEntity.getMainHandItem();
-        if (itemStack.is(TagInit.ACROSS_DOUBLE_HANDED_ITEMS) || itemStack.is(TagInit.DOUBLE_HANDED_ITEMS) || itemStack.getItem() instanceof LongSwordItem || itemStack.getItem() instanceof BigAxeItem || itemStack.getItem() instanceof LanceItem)
+        ItemStack held = livingEntity.getMainHandItem();
+        if (MUtil.reducesSwingTime(held))
         {
             info.setReturnValue(10);
         }
@@ -43,7 +40,7 @@ public abstract class LivingEntityMixin extends Entity
     {
         LivingEntity livingEntity = (LivingEntity) (Object) this;
         ItemStack held = livingEntity.getMainHandItem();
-        if (held.is(TagInit.ACROSS_DOUBLE_HANDED_ITEMS) || held.is(TagInit.DOUBLE_HANDED_ITEMS) || held.getItem() instanceof LongSwordItem || held.getItem() instanceof BigAxeItem)
+        if (MUtil.hasSpecialBlockBehavior(held))
         {
             info.setReturnValue(false);
         }
@@ -54,7 +51,7 @@ public abstract class LivingEntityMixin extends Entity
     {
         LivingEntity livingEntity = (LivingEntity) (Object) this;
         ItemStack held = livingEntity.getMainHandItem();
-        if (held.is(TagInit.ACROSS_DOUBLE_HANDED_ITEMS) || held.is(TagInit.DOUBLE_HANDED_ITEMS) || held.getItem() instanceof LongSwordItem || held.getItem() instanceof BigAxeItem)
+        if (MUtil.hasSpecialBlockBehavior(held))
         {
             if (livingEntity instanceof Player player)
             {

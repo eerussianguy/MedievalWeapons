@@ -4,7 +4,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 
-import net.medievalweapons.MedievalWeapons;
+import net.medievalweapons.MUtil;
 
 public class TagInit
 {
@@ -14,7 +14,7 @@ public class TagInit
 
     public static TagKey<Item> item(String name)
     {
-        return TagKey.create(Registry.ITEM_REGISTRY, MedievalWeapons.identifier(name));
+        return TagKey.create(Registry.ITEM_REGISTRY, MUtil.identifier(name));
     }
 
     public static void init() { }
