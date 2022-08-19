@@ -3,6 +3,7 @@ package net.medievalweapons.client;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -88,4 +89,8 @@ public final class ClientEvents
         return modelIdentifier(name, "main");
     }
 
+    public static ResourceLocation texture(ItemStack stack)
+    {
+        return MedievalWeapons.identifier("textures/entity/" + stack.getItem() + ".png");
+    }
 }

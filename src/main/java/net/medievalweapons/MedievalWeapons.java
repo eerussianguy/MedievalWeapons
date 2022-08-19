@@ -15,6 +15,7 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
 
 import net.dries007.tfc.common.capabilities.food.FoodCapability;
 import net.medievalweapons.client.ClientEvents;
+import net.medievalweapons.client.ClientForgeEvents;
 import net.medievalweapons.config.MedievalConfig;
 import net.medievalweapons.effect.EffectInit;
 import net.medievalweapons.entity.EntityInit;
@@ -45,8 +46,10 @@ public final class MedievalWeapons
         if (FMLEnvironment.dist == Dist.CLIENT)
         {
             ClientEvents.init();
+            ClientForgeEvents.init();
         }
 
+        ForgeEvents.init();
         MedievalConfig.init();
         MedievalPacketHandler.init();
         TagInit.init();

@@ -2,50 +2,34 @@ package net.medievalweapons.client.renderer;
 
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
-import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.dries007.tfc.client.ClientHelpers;
 import net.medievalweapons.client.model.ThalleousSwordModel;
 
-@Environment(EnvType.CLIENT)
-public enum ThalleousSwordRenderer
+public class ThalleousSwordRenderer extends MedievalBEWLR<ThalleousSwordModel>
 {
-    INSTANCE;
-
-    private final ThalleousSwordModel thalleous_Sword__Model = new ThalleousSwordModel(ThalleousSwordModel.getTexturedModelData().bakeRoot());
-
-    public boolean render(LivingEntity entity, ItemStack stack, ItemTransforms.TransformType renderMode, boolean leftHanded, PoseStack matrices, MultiBufferSource vertexConsumers, int light,
-                          int overlay, BakedModel model)
+    public ThalleousSwordRenderer()
     {
-        if (renderMode == ItemTransforms.TransformType.GUI || renderMode == ItemTransforms.TransformType.GROUND || renderMode == ItemTransforms.TransformType.FIXED)
-        {
-            return false;
-        }
+        super("thalleous_sword", ThalleousSwordModel::new);
+    }
 
-        matrices.pushPose();
-        model.getTransforms().getTransform(renderMode).apply(leftHanded, matrices);
-        if (entity != null)
+    @Override
+    public void renderByItem(ItemStack stack, ItemTransforms.TransformType transforms, PoseStack poseStack, MultiBufferSource buffers, int packedLight, int packedOverlay)
+    {
+        poseStack.pushPose();
+        if (ClientHelpers.getPlayer() != null)
         {
-            if ((renderMode == ItemTransforms.TransformType.FIRST_PERSON_LEFT_HAND || renderMode == ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND) && entity.isBlocking())
+            if ((transforms == ItemTransforms.TransformType.FIRST_PERSON_LEFT_HAND || transforms == ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND) && ClientHelpers.getPlayer().isBlocking())
             {
-                matrices.mulPose(Vector3f.ZP.rotationDegrees(30.0F));
-                matrices.mulPose(Vector3f.YP.rotationDegrees(leftHanded ? 20.0F : -20.0F));
+                poseStack.mulPose(Vector3f.ZP.rotationDegrees(30.0F));
+                poseStack.mulPose(Vector3f.YP.rotationDegrees(-20.0F));
             }
         }
-        matrices.translate(-0.05D, 0.84D, 0.0D);
-        matrices.scale(1.0F, -1.0F, -1.0F);
-        VertexConsumer vertexConsumer = ItemRenderer.getFoilBuffer(vertexConsumers,
-            this.thalleous_Sword__Model.renderType(new ResourceLocation("medievalweapons", "textures/entity/thalleous_sword.png")), false, stack.hasFoil());
-        this.thalleous_Sword__Model.renderToBuffer(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
-        matrices.popPose();
-        return true;
+        poseStack.translate(-0.05D, 0.84D, 0.0D);
+        super.renderByItem(stack, transforms, poseStack, buffers, packedLight, packedOverlay);
+        poseStack.popPose();
     }
 }

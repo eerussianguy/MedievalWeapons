@@ -23,7 +23,7 @@ public class ItemInit
     public static final RegistryObject<LongSwordItem> WOOD_LONG_SWORD_ITEM = register("wooden_long_sword", () -> new LongSwordItem(Tiers.WOOD, 6, -3.0F, properties()));
     public static final RegistryObject<DaggerItem> WOOD_DAGGER_ITEM = register("wooden_dagger", () -> new DaggerItem(Tiers.WOOD, 2, -2.0F, properties()));
     public static final RegistryObject<FranciscaLTItem> WOODEN_FRANCISCA_LT_ITEM = register("wooden_francisca", () -> new FranciscaLTItem(Tiers.WOOD, 1.0F, -2.6F, EntityInit.WOODEN_FRANCISCA_LT, properties()));
-    public static final RegistryObject<FrancisaHTItem> WOODEN_FRANCISCA_HT_ITEM = register("wooden_francisca_ht", () -> new FrancisaHTItem(Tiers.WOOD, 1.0F, -2.6F, EntityInit.WOODEN_FRANCISCA_HT, properties()));
+    public static final RegistryObject<FrancisaHTItem> WOODEN_FRANCISCA_HT_ITEM = register("wooden_francisca_ht", () -> new FrancisaHTItem(Tiers.WOOD, 1.0F, -2.6F, properties()));
     public static final RegistryObject<BigAxeItem> WOODEN_BIG_AXE_ITEM = register("wooden_big_axe", () -> new BigAxeItem(Tiers.WOOD, 6, -3.4F, properties()));
 
     public static final RegistryObject<LanceItem> WOODEN_LANCE_ITEM = register("wooden_lance", () -> new LanceItem(Tiers.WOOD, 3, -3.2F, properties()));

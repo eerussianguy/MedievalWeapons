@@ -6,9 +6,13 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.BowItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.PlaySoundAtEntityEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
@@ -18,7 +22,9 @@ import net.medievalweapons.effect.EffectInit;
 import net.medievalweapons.init.SoundInit;
 import net.medievalweapons.init.TagInit;
 import net.medievalweapons.item.BigAxeItem;
+import net.medievalweapons.item.LongBowItem;
 import net.medievalweapons.item.LongSwordItem;
+import net.medievalweapons.item.RecurveBowItem;
 
 public class ForgeEvents
 {
@@ -29,6 +35,29 @@ public class ForgeEvents
         bus.addListener(ForgeEvents::onPlayerAttack);
         bus.addListener(ForgeEvents::onLivingHurt);
         bus.addListener(ForgeEvents::onPlaySoundAt);
+        bus.addListener(ForgeEvents::onEntityJoin);
+    }
+
+    public static void onEntityJoin(EntityJoinWorldEvent event)
+    {
+        if (event.loadedFromDisk()) return;
+
+        if (event.getEntity() instanceof AbstractArrow arrow && arrow.getOwner() instanceof Player player)
+        {
+            Item bow = player.getMainHandItem().getItem();
+            if (!(bow instanceof BowItem))
+            {
+                bow = player.getOffhandItem().getItem();
+            }
+            if (bow instanceof RecurveBowItem)
+            {
+                arrow.setDeltaMovement(arrow.getDeltaMovement().scale(1.23));
+            }
+            else if (bow instanceof LongBowItem)
+            {
+                arrow.setDeltaMovement(arrow.getDeltaMovement().scale(0.87));
+            }
+        }
     }
 
     public static void onPlaySoundAt(PlaySoundAtEntityEvent event)

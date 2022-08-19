@@ -1,13 +1,13 @@
 package net.medievalweapons.item;
 
-import java.util.function.Supplier;
+import java.util.function.Consumer;
 
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -17,29 +17,19 @@ import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 
+import net.minecraftforge.client.IItemRenderProperties;
+import net.minecraftforge.common.util.NonNullLazy;
+
+import net.dries007.tfc.client.render.blockentity.JavelinItemRenderer;
+import net.medievalweapons.client.renderer.FranciscaHTRenderer;
 import net.medievalweapons.entity.FranciscaHTEntity;
-import org.jetbrains.annotations.Nullable;
 
 public class FrancisaHTItem extends SwordItem
 {
 
-    private final Supplier<EntityType<FranciscaHTEntity>> typeSupplier;
-    @Nullable
-    private EntityType<FranciscaHTEntity> cachedType = null;
-
-    public FrancisaHTItem(Tier toolMaterial, float attackDamage, float attackSpeed, Supplier<EntityType<FranciscaHTEntity>> typeSupplier, Properties settings)
+    public FrancisaHTItem(Tier toolMaterial, float attackDamage, float attackSpeed, Properties settings)
     {
         super(toolMaterial, (int) attackDamage, attackSpeed, settings);
-        this.typeSupplier = typeSupplier;
-    }
-
-    public EntityType<FranciscaHTEntity> getType()
-    {
-        if (cachedType == null)
-        {
-            cachedType = typeSupplier.get();
-        }
-        return cachedType;
     }
 
     @Override

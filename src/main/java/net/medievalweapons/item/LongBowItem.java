@@ -4,7 +4,6 @@ import net.minecraft.world.item.BowItem;
 
 public class LongBowItem extends BowItem
 {
-
     public LongBowItem(Properties settings)
     {
         super(settings);
@@ -15,5 +14,4 @@ public class LongBowItem extends BowItem
     {
         return 20;
     }
-
 }
