@@ -1,4 +1,4 @@
-package net.medievalweapons.init;
+package net.medievalweapons.effect;
 
 import java.util.function.Supplier;
 

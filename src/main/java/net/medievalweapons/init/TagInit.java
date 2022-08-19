@@ -9,7 +9,8 @@ import net.medievalweapons.MedievalWeapons;
 public class TagInit
 {
     public static final TagKey<Item> DOUBLE_HANDED_ITEMS = item("double_handed_items");
-    public static final TagKey<Item> ACCROSS_DOUBLE_HANDED_ITEMS = item("accross_double_handed_items");
+    public static final TagKey<Item> ACROSS_DOUBLE_HANDED_ITEMS = item("accross_double_handed_items");
+    public static final TagKey<Item> MACES = item("maces");
 
     public static TagKey<Item> item(String name)
     {

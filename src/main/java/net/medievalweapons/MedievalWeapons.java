@@ -16,8 +16,10 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.dries007.tfc.common.capabilities.food.FoodCapability;
 import net.medievalweapons.client.ClientEvents;
 import net.medievalweapons.config.MedievalConfig;
+import net.medievalweapons.effect.EffectInit;
+import net.medievalweapons.entity.EntityInit;
 import net.medievalweapons.init.*;
-import net.medievalweapons.network.PlayerPacket;
+import net.medievalweapons.network.MedievalPacketHandler;
 
 @Mod(MedievalWeapons.MOD_ID)
 public final class MedievalWeapons
@@ -46,7 +48,7 @@ public final class MedievalWeapons
         }
 
         MedievalConfig.init();
-        PlayerPacket.init();
+        MedievalPacketHandler.init();
         TagInit.init();
     }
 

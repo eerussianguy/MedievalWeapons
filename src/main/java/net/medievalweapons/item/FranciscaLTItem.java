@@ -18,11 +18,13 @@ import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 
 import net.medievalweapons.entity.FranciscaLTEntity;
+import org.jetbrains.annotations.Nullable;
 
 public class FranciscaLTItem extends SwordItem
 {
 
     private final Supplier<EntityType<FranciscaLTEntity>> typeSupplier;
+    @Nullable
     private EntityType<FranciscaLTEntity> cachedType = null;
 
     public FranciscaLTItem(Tier toolMaterial, float attackDamage, float attackSpeed, Supplier<EntityType<FranciscaLTEntity>> typeSupplier, Properties settings)
@@ -43,23 +45,22 @@ public class FranciscaLTItem extends SwordItem
     @Override
     public void releaseUsing(ItemStack stack, Level world, LivingEntity user, int remainingUseTicks)
     {
-        if (user instanceof Player)
+        if (user instanceof Player playerEntity)
         {
-            Player playerEntity = (Player) user;
             int i = this.getUseDuration(stack) - remainingUseTicks;
             if (i >= 10)
             {
                 if (!world.isClientSide)
                 {
                     stack.hurtAndBreak(1, playerEntity, entity -> entity.broadcastBreakEvent(user.getUsedItemHand()));
-                    FranciscaLTEntity francisca_LT_Entity = new FranciscaLTEntity(world, playerEntity, this, stack);
-                    francisca_LT_Entity.shootFromRotation(playerEntity, playerEntity.getXRot(), playerEntity.getYRot(), 0.0F, 1.2F, 1.0F);
+                    FranciscaLTEntity entity = new FranciscaLTEntity(world, playerEntity, this, stack);
+                    entity.shootFromRotation(playerEntity, playerEntity.getXRot(), playerEntity.getYRot(), 0.0F, 1.2F, 1.0F);
                     if (playerEntity.isCreative())
                     {
-                        francisca_LT_Entity.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
+                        entity.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
                     }
-                    world.addFreshEntity(francisca_LT_Entity);
-                    world.playSound(null, francisca_LT_Entity, SoundEvents.TRIDENT_THROW, SoundSource.PLAYERS, 1.0F, 1.0F);
+                    world.addFreshEntity(entity);
+                    world.playSound(null, entity, SoundEvents.TRIDENT_THROW, SoundSource.PLAYERS, 1.0F, 1.0F);
                     if (!playerEntity.isCreative())
                     {
                         playerEntity.getInventory().removeItem(stack);

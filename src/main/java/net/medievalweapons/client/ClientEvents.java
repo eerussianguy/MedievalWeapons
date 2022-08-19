@@ -12,7 +12,7 @@ import net.medievalweapons.MedievalWeapons;
 import net.medievalweapons.client.model.*;
 import net.medievalweapons.client.renderer.FranciscaHTRenderer;
 import net.medievalweapons.client.renderer.FranciscaLTRenderer;
-import net.medievalweapons.init.EntityInit;
+import net.medievalweapons.entity.EntityInit;
 import net.medievalweapons.init.ItemInit;
 
 public final class ClientEvents

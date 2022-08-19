@@ -16,7 +16,7 @@ import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.level.Level;
 
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
+import net.minecraftforge.common.ForgeMod;
 
 public class LanceItem extends SwordItem
 {
@@ -24,7 +24,7 @@ public class LanceItem extends SwordItem
     private final float attackDamage;
     public final Multimap<Attribute, AttributeModifier> attributeModifiers;
     private static final UUID ATTACK_BONUS_MODIFIER_ID = UUID.fromString("fbd4e4e4-62f7-4108-9be3-eb6781231298");
-    private static final AttributeModifier ATTACK_BONUS_MODIFIER;
+    private static final AttributeModifier ATTACK_BONUS_MODIFIER = new AttributeModifier(ATTACK_BONUS_MODIFIER_ID, "Sneaking attack bonus", 2.0D, AttributeModifier.Operation.ADDITION);
 
     public LanceItem(Tier material, int attackDamage, float attackSpeed, Properties settings)
     {
@@ -34,8 +34,7 @@ public class LanceItem extends SwordItem
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
         builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", this.attackDamage, AttributeModifier.Operation.ADDITION));
         builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", attackSpeed, AttributeModifier.Operation.ADDITION));
-        builder.put(ReachEntityAttributes.REACH, new AttributeModifier("Attack range", 1.5D, AttributeModifier.Operation.ADDITION));
-        builder.put(ReachEntityAttributes.ATTACK_RANGE, new AttributeModifier("Attack range", 1.5D, AttributeModifier.Operation.ADDITION));
+        builder.put(ForgeMod.ATTACK_RANGE.get(), new AttributeModifier("Attack range", 1.5D, AttributeModifier.Operation.ADDITION));
         this.attributeModifiers = builder.build();
     }
 
@@ -54,9 +53,8 @@ public class LanceItem extends SwordItem
     @Override
     public void inventoryTick(ItemStack stack, Level world, Entity entity, int slot, boolean selected)
     {
-        if (entity instanceof Player && !world.isClientSide)
+        if (entity instanceof Player player && !world.isClientSide)
         {
-            Player player = (Player) entity;
             if (selected && player.isPassenger() && !player.getAttributes().hasModifier(Attributes.ATTACK_DAMAGE, ATTACK_BONUS_MODIFIER_ID))
             {
                 AttributeInstance entityAttributeInstance = player.getAttribute(Attributes.ATTACK_DAMAGE);
@@ -67,11 +65,6 @@ public class LanceItem extends SwordItem
                 player.getAttribute(Attributes.ATTACK_DAMAGE).removeModifier(ATTACK_BONUS_MODIFIER_ID);
             }
         }
-    }
-
-    static
-    {
-        ATTACK_BONUS_MODIFIER = new AttributeModifier(ATTACK_BONUS_MODIFIER_ID, "Sneaking attack bonus", 2.0D, AttributeModifier.Operation.ADDITION);
     }
 
 }

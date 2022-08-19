@@ -3,6 +3,7 @@ package net.medievalweapons.entity;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.Supplier;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -20,27 +21,27 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.minecraftforge.network.NetworkHooks;
+
 import net.medievalweapons.item.FrancisaHTItem;
-import net.medievalweapons.network.EntitySpawnPacket;
 
 public class FranciscaHTEntity extends AbstractArrow
 {
-    private static final EntityDataAccessor<Boolean> ENCHANTMENT_GLINT;
+    private static final EntityDataAccessor<Boolean> ENCHANTMENT_GLINT = SynchedEntityData.defineId(FranciscaHTEntity.class, EntityDataSerializers.BOOLEAN);;
     private ItemStack francisca_HT;
     private final Set<UUID> piercedEntities = new HashSet<>();
 
-    public FranciscaHTEntity(EntityType<? extends FranciscaHTEntity> entityType, Level world, FrancisaHTItem item)
+    public FranciscaHTEntity(EntityType<? extends FranciscaHTEntity> entityType, Level world, Supplier<? extends Item> item)
     {
         super(entityType, world);
-        this.francisca_HT = new ItemStack(item);
+        this.francisca_HT = new ItemStack(item.get());
     }
 
     public FranciscaHTEntity(Level world, LivingEntity owner, FrancisaHTItem item, ItemStack stack)
@@ -51,7 +52,6 @@ public class FranciscaHTEntity extends AbstractArrow
         this.entityData.set(ENCHANTMENT_GLINT, stack.hasFoil());
     }
 
-    @Environment(EnvType.CLIENT)
     public FranciscaHTEntity(Level world, double x, double y, double z, FrancisaHTItem item)
     {
         super(item.getType(), x, y, z, world);
@@ -68,7 +68,7 @@ public class FranciscaHTEntity extends AbstractArrow
     @Override
     public Packet<?> getAddEntityPacket()
     {
-        return EntitySpawnPacket.createPacket(this);
+        return NetworkHooks.getEntitySpawningPacket(this);
     }
 
     @Override
@@ -77,7 +77,6 @@ public class FranciscaHTEntity extends AbstractArrow
         return this.francisca_HT.copy();
     }
 
-    @Environment(EnvType.CLIENT)
     public boolean enchantingGlint()
     {
         return this.entityData.get(ENCHANTMENT_GLINT);
@@ -193,15 +192,9 @@ public class FranciscaHTEntity extends AbstractArrow
     }
 
     @Override
-    @Environment(EnvType.CLIENT)
     public boolean shouldRender(double cameraX, double cameraY, double cameraZ)
     {
         return true;
-    }
-
-    static
-    {
-        ENCHANTMENT_GLINT = SynchedEntityData.defineId(FranciscaHTEntity.class, EntityDataSerializers.BOOLEAN);
     }
 
 }

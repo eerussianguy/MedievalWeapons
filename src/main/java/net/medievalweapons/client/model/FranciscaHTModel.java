@@ -11,10 +11,7 @@ import net.minecraft.client.renderer.RenderType;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 
-@Environment(EnvType.CLIENT)
 public class FranciscaHTModel extends Model
 {
     private final ModelPart base;
