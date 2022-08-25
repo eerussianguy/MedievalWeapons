@@ -11,9 +11,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import net.medievalweapons.MedievalWeapons;
-import net.medievalweapons.entity.FranciscaHTEntity;
-import net.medievalweapons.entity.FranciscaLTEntity;
-import net.medievalweapons.init.ItemInit;
 
 import static net.dries007.tfc.TerraFirmaCraft.MOD_ID;
 
@@ -21,8 +18,8 @@ public class EntityInit
 {
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, MedievalWeapons.MOD_ID);
 
-    public static final RegistryObject<EntityType<FranciscaLTEntity>> WOODEN_FRANCISCA_LT = register("wooden_francisca", EntityType.Builder.<FranciscaLTEntity>of((type, level) -> new FranciscaLTEntity(type, level, ItemInit.WOODEN_FRANCISCA_LT_ITEM), MobCategory.MISC).sized(0.5f, 0.5f));
-    public static final RegistryObject<EntityType<FranciscaHTEntity>> WOODEN_FRANCISCA_HT = register("wooden_francisca_ht", EntityType.Builder.<FranciscaHTEntity>of((type, level) -> new FranciscaHTEntity(type, level, ItemInit.WOODEN_FRANCISCA_HT_ITEM), MobCategory.MISC).sized(0.5f, 0.5f));
+    public static final RegistryObject<EntityType<ThrownFrancisca>> THROWN_FRANCISCA_HT = register("thrown_francisca_ht", EntityType.Builder.<ThrownFrancisca>of(ThrownFrancisca::new, MobCategory.MISC).sized(0.5f, 0.5f));
+    public static final RegistryObject<EntityType<ThrownFrancisca>> THROWN_FRANCISCA_LT = register("thrown_francisca_lt", EntityType.Builder.<ThrownFrancisca>of(ThrownFrancisca::new, MobCategory.MISC).sized(0.5f, 0.5f));
 
     public static <E extends Entity> RegistryObject<EntityType<E>> register(String name, EntityType.Builder<E> builder)
     {

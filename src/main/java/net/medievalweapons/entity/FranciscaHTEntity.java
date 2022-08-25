@@ -35,27 +35,32 @@ import net.medievalweapons.item.FrancisaHTItem;
 public class FranciscaHTEntity extends AbstractArrow
 {
     private static final EntityDataAccessor<Boolean> ENCHANTMENT_GLINT = SynchedEntityData.defineId(FranciscaHTEntity.class, EntityDataSerializers.BOOLEAN);;
-    private ItemStack francisca_HT;
+    private ItemStack internalStack;
     private final Set<UUID> piercedEntities = new HashSet<>();
 
     public FranciscaHTEntity(EntityType<? extends FranciscaHTEntity> entityType, Level world, Supplier<? extends Item> item)
     {
         super(entityType, world);
-        this.francisca_HT = new ItemStack(item.get());
+        this.internalStack = new ItemStack(item.get());
     }
 
     public FranciscaHTEntity(Level world, LivingEntity owner, FrancisaHTItem item, ItemStack stack)
     {
-        super(item.getType(), owner, world);
-        this.francisca_HT = new ItemStack(item);
-        this.francisca_HT = stack.copy();
+        super(EntityInit.WOODEN_FRANCISCA_HT.get(), ), owner, world);
+        this.internalStack = new ItemStack(item);
+        this.internalStack = stack.copy();
         this.entityData.set(ENCHANTMENT_GLINT, stack.hasFoil());
     }
 
     public FranciscaHTEntity(Level world, double x, double y, double z, FrancisaHTItem item)
     {
         super(item.getType(), x, y, z, world);
-        this.francisca_HT = new ItemStack(item);
+        this.internalStack = new ItemStack(item);
+    }
+
+    public ItemStack getInternalStack()
+    {
+        return internalStack;
     }
 
     @Override
@@ -74,7 +79,7 @@ public class FranciscaHTEntity extends AbstractArrow
     @Override
     protected ItemStack getPickupItem()
     {
-        return this.francisca_HT.copy();
+        return this.internalStack.copy();
     }
 
     public boolean enchantingGlint()
@@ -85,17 +90,17 @@ public class FranciscaHTEntity extends AbstractArrow
     @Override
     protected void onHitEntity(EntityHitResult entityHitResult)
     {
-        int level = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PIERCING, this.francisca_HT);
+        int level = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PIERCING, this.internalStack);
         Entity hitEntity = entityHitResult.getEntity();
         if (this.piercedEntities.contains(hitEntity.getUUID()) || this.piercedEntities.size() > level)
         {
             return;
         }
         this.piercedEntities.add(hitEntity.getUUID());
-        float damage = ((FrancisaHTItem) this.francisca_HT.getItem()).getDamage() * 2.3F;
+        float damage = ((FrancisaHTItem) this.internalStack.getItem()).getDamage() * 2.3F;
         if (hitEntity instanceof Animal)
         {
-            int impalingLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.IMPALING, this.francisca_HT);
+            int impalingLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.IMPALING, this.internalStack);
             if (impalingLevel > 0)
             {
                 damage += impalingLevel * 1.5F;
@@ -152,8 +157,8 @@ public class FranciscaHTEntity extends AbstractArrow
         super.readAdditionalSaveData(nbt);
         if (nbt.contains("francisca_ht", 10))
         {
-            this.francisca_HT = ItemStack.of(nbt.getCompound("francisca_lt"));
-            this.entityData.set(ENCHANTMENT_GLINT, this.francisca_HT.hasFoil());
+            this.internalStack = ItemStack.of(nbt.getCompound("francisca_lt"));
+            this.entityData.set(ENCHANTMENT_GLINT, this.internalStack.hasFoil());
         }
 
         this.piercedEntities.clear();
@@ -170,7 +175,7 @@ public class FranciscaHTEntity extends AbstractArrow
     public void addAdditionalSaveData(CompoundTag nbt)
     {
         super.addAdditionalSaveData(nbt);
-        nbt.put("francisca_ht", this.francisca_HT.save(new CompoundTag()));
+        nbt.put("francisca_ht", this.internalStack.save(new CompoundTag()));
 
         ListTag tags = new ListTag();
         for (UUID uuid : this.piercedEntities)

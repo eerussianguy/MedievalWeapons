@@ -12,11 +12,11 @@ import net.minecraft.client.renderer.RenderType;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
-public class FranciscaLtModel extends Model
+public class FranciscaLTModel extends Model
 {
     private final ModelPart base;
 
-    public FranciscaLtModel(ModelPart base)
+    public FranciscaLTModel(ModelPart base)
     {
         super(RenderType::entitySolid);
         this.base = base.getChild("base");

@@ -11,8 +11,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import net.medievalweapons.MUtil;
 import net.medievalweapons.client.model.*;
-import net.medievalweapons.client.renderer.FranciscaHTRenderer;
-import net.medievalweapons.client.renderer.FranciscaLTRenderer;
+import net.medievalweapons.client.renderer.FranciscaRenderer;
 import net.medievalweapons.entity.EntityInit;
 import net.medievalweapons.init.ItemInit;
 
@@ -62,17 +61,16 @@ public final class ClientEvents
 
     public static void onEntityRenderers(EntityRenderersEvent.RegisterRenderers event)
     {
-        event.registerEntityRenderer(EntityInit.WOODEN_FRANCISCA_LT.get(), FranciscaLTRenderer::new);
-        event.registerEntityRenderer(EntityInit.WOODEN_FRANCISCA_HT.get(), FranciscaHTRenderer::new);
+        event.registerEntityRenderer(EntityInit.THROWN_FRANCISCA_LT.get(), ctx -> new FranciscaRenderer(ctx, false));
+        event.registerEntityRenderer(EntityInit.THROWN_FRANCISCA_HT.get(), ctx -> new FranciscaRenderer(ctx, true));
         // jav would go here
-
     }
 
     public static void onLayerRegister(EntityRenderersEvent.RegisterLayerDefinitions event)
     {
         event.registerLayerDefinition(modelIdentifier("big_axe"), BigAxeModel::getTexturedModelData);
         event.registerLayerDefinition(modelIdentifier("francisca_ht"), FranciscaHTModel::getTexturedModelData);
-        event.registerLayerDefinition(modelIdentifier("francisca_lit"), FranciscaLtModel::getTexturedModelData);
+        event.registerLayerDefinition(modelIdentifier("francisca_lit"), FranciscaLTModel::getTexturedModelData);
         event.registerLayerDefinition(modelIdentifier("javelin"), MedievalJavelinModel::getTexturedModelData);
         event.registerLayerDefinition(modelIdentifier("lance"), LanceModel::getTexturedModelData);
         event.registerLayerDefinition(modelIdentifier("mace"), MaceModel::getTexturedModelData);
